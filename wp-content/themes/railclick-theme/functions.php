@@ -2084,11 +2084,34 @@ function railclick_save_hero_section_meta_box_data( $post_id ) {
 add_action( 'save_post', 'railclick_save_hero_section_meta_box_data' );
 
 // Enqueue media uploader script
-function railclick_enqueue_media_uploader() {
+function railclick_enqueue_media_uploader( $hook ) {
+    // Only load on post edit screens
+    if ( 'post.php' != $hook && 'post-new.php' != $hook ) {
+        return;
+    }
+    
+    // Only load for pages (not posts)
+    global $post;
+    if ( $post && $post->post_type !== 'page' ) {
+        return;
+    }
+    
+    // Enqueue WordPress media library
     if ( ! did_action( 'wp_enqueue_media' ) ) {
         wp_enqueue_media();
     }
-    wp_enqueue_script( 'railclick-media-uploader', get_template_directory_uri() . '/assets/js/media-uploader.js', array( 'jquery' ), null, true );
+    
+    // Enqueue our custom media uploader script
+    wp_enqueue_script( 
+        'railclick-media-uploader', 
+        get_template_directory_uri() . '/assets/js/media-uploader.js', 
+        array( 'jquery', 'media-upload', 'thickbox' ), 
+        '1.0.0', 
+        true 
+    );
+    
+    // Enqueue thickbox styles for media uploader
+    wp_enqueue_style( 'thickbox' );
 }
 add_action( 'admin_enqueue_scripts', 'railclick_enqueue_media_uploader' );
 
