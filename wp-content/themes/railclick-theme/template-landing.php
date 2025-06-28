@@ -6,20 +6,20 @@ get_header();
 ?>
 
 <div class="min-h-screen bg-white">
-      {/* Header */}
-      {/* Hero Section */}
+      
+      
       <section class="relative min-h-screen flex items-center justify-center px-4 sm:px-6 py-4 sm:py-auto">
-        {/* Rounded Container */}
+        
         <div class="relative w-full sm:w-[90vw] max-w-none sm:max-w-none h-[calc(100vh-2rem)] sm:h-[90vh] mx-auto rounded-3xl overflow-hidden border-2 sm:border-4 border-white shadow-lg sm:shadow-2xl">
-          {/* Background Image */}
+          
           <div class="absolute inset-0">
             <img src="<?php echo get_theme_file_uri('/assets/images/colosseum-bg.jpg'); ?>" alt="Roman Colosseum" class="object-cover w-full h-full" />
             <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40"></div>
           </div>
 
-          {/* Content */}
+          
           <div class="relative z-10 h-[calc(100vh-2rem)] sm:h-[90vh] flex flex-col">
-            {/* Header inside rounded container */}
+            
             <header class="p-4 sm:p-6 lg:p-8 flex-shrink-0">
               <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-2">
@@ -29,7 +29,7 @@ get_header();
                   <span class="text-white font-semibold text-lg sm:text-xl">ItalyTren</span>
                 </div>
 
-                {/* Desktop Navigation */}
+                
                 <nav class="hidden lg:flex items-center space-x-6 xl:space-x-8">
                   <a href="#inicio" class="text-white/80 hover:text-white transition-colors text-sm xl:text-base">
                     Inicio
@@ -54,7 +54,7 @@ get_header();
                   </a>
                 </nav>
 
-                {/* Mobile Menu Button */}
+                
                 <div class="lg:hidden">
                   <button class="text-white hover:bg-white/10 p-2">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -63,7 +63,7 @@ get_header();
                   </button>
                 </div>
 
-                {/* Desktop Actions */}
+                
                 <div class="hidden lg:flex items-center space-x-3 xl:space-x-4">
                   <div class="flex items-center space-x-2">
                     <select class="bg-white/20 backdrop-blur-md text-white border border-white/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-white/40 hover:bg-white/25 transition-all duration-300">
@@ -84,7 +84,7 @@ get_header();
               </div>
             </header>
 
-            {/* Main Content */}
+            
             <div class="flex-1 flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 min-h-0">
               <div class="mb-4 sm:mb-6">
                 <span class="text-white/90 text-base sm:text-lg font-medium italic">Viaja por Italia</span>
@@ -94,9 +94,9 @@ get_header();
                 Explora las mejores rutas de tren en Italia
               </h1>
 
-              {/* Search Bar - Mobile First */}
+              
               <div class="relative bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl sm:rounded-full p-3 sm:p-2 mb-6 sm:mb-8 w-full max-w-5xl shadow-2xl">
-                {/* Mobile Layout - Stacked */}
+                
                 <div class="flex flex-col sm:hidden space-y-3">
                   <select class="w-full bg-transparent text-white placeholder-white/70 px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/40 border border-white/30">
                     <option value="" class="text-gray-900">Origen</option>
@@ -121,7 +121,7 @@ get_header();
                   </button>
                 </div>
 
-                {/* Desktop Layout - Inline */}
+                
                 <div class="hidden sm:flex items-center gap-1">
                   <div class="flex-1">
                     <select class="w-full bg-transparent text-white placeholder-white/70 px-3 lg:px-4 py-3 rounded-full focus:outline-none focus:ring-2 focus:ring-white/30 border-0 text-sm lg:text-base">
@@ -160,9 +160,9 @@ get_header();
               </p>
             </div>
 
-            {/* Bottom Section */}
+            
             <div class="flex flex-col lg:flex-row items-center lg:items-end justify-center lg:justify-between p-4 sm:p-6 lg:p-8 space-y-4 lg:space-y-0 flex-shrink-0">
-              {/* World Travel Awards Badge */}
+              
               <div class="flex items-center space-x-2 text-white">
                 <div class="w-8 h-8 lg:w-12 lg:h-12 bg-orange-600 rounded-full flex items-center justify-center">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 lg:h-6 lg:w-6 text-white"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
@@ -174,7 +174,7 @@ get_header();
                 </div>
               </div>
 
-              {/* Center Text */}
+              
               <div class="text-center text-white/90 max-w-2xl px-4">
                 <p class="text-xs sm:text-sm lg:text-sm xl:text-base">
                   Descubre el corazón de Italia con experiencias de viaje únicas que muestran sus ciudades eternas,
@@ -182,7 +182,7 @@ get_header();
                 </p>
               </div>
 
-              {/* Rating Badge */}
+              
               <div class="flex items-center space-x-2 text-white">
                 <div class="w-6 h-6 lg:w-8 lg:h-8 bg-green-600 rounded-full flex items-center justify-center">
                   <span class="text-xs font-bold">★</span>
@@ -197,7 +197,7 @@ get_header();
         </div>
       </section>
 
-      <!-- Popular Routes Section -->
+      
       <section class="py-12 bg-white" id="rutas">
         <div class="container mx-auto px-6">
           <div class="relative max-w-6xl mx-auto bg-white p-8 md:p-12">
@@ -217,7 +217,7 @@ get_header();
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-              <!-- Roma - Nápoles -->
+              
               <div class="group bg-white rounded-2xl border border-gray-200 hover:shadow-lg transition-shadow overflow-hidden">
                 <div class="relative h-48">
                   <img src="<?php echo get_theme_file_uri('/assets/images/colosseum-interior.jpg'); ?>" alt="Roma - Nápoles" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300">
@@ -241,7 +241,7 @@ get_header();
                 </div>
               </div>
 
-              <!-- Roma - Florencia -->
+              
               <div class="group bg-white rounded-2xl border border-gray-200 hover:shadow-lg transition-shadow overflow-hidden">
                 <div class="relative h-48">
                   <img src="<?php echo get_theme_file_uri('/assets/images/florence-duomo.jpg'); ?>" alt="Roma - Florencia" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300">
@@ -263,7 +263,7 @@ get_header();
                 </div>
               </div>
 
-              <!-- Milán - Venecia -->
+              
               <div class="group bg-white rounded-2xl border border-gray-200 hover:shadow-lg transition-shadow overflow-hidden">
                 <div class="relative h-48">
                   <img src="<?php echo get_theme_file_uri('/assets/images/venice-grand-canal.jpg'); ?>" alt="Milán - Venecia" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300">
@@ -298,7 +298,7 @@ get_header();
         </div>
       </section>
 
-      <!-- Train Types Section -->
+      
       <section class="py-12 bg-gray-50" id="tipos">
         <div class="container mx-auto px-6">
           <div class="relative max-w-6xl mx-auto bg-white rounded-3xl p-8 md:p-12">
@@ -318,7 +318,7 @@ get_header();
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <!-- Frecciarossa -->
+              
               <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:shadow-lg transition-shadow">
                 <div class="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center mb-6">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8 text-red-600"><path d="M10 9.5 14 5.5"/><path d="m14 14-4 4"/><path d="M10 18.5 14 14.5"/><path d="m14 9.5-4-4"/><path d="M5 12h14"/><path d="M5 12h14"/><path d="M8 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h2"/><path d="M18 3h-2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h2"/></svg>
@@ -340,7 +340,7 @@ get_header();
                 </ul>
               </div>
 
-              <!-- Italo -->
+              
               <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:shadow-lg transition-shadow">
                 <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mb-6">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8 text-purple-600"><path d="M10 9.5 14 5.5"/><path d="m14 14-4 4"/><path d="M10 18.5 14 14.5"/><path d="m14 9.5-4-4"/><path d="M5 12h14"/><path d="M5 12h14"/><path d="M8 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h2"/><path d="M18 3h-2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h2"/></svg>
@@ -362,7 +362,7 @@ get_header();
                 </ul>
               </div>
 
-              <!-- Frecciargento -->
+              
               <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:shadow-lg transition-shadow">
                 <div class="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mb-6">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8 text-gray-600"><path d="M10 9.5 14 5.5"/><path d="m14 14-4 4"/><path d="M10 18.5 14 14.5"/><path d="m14 9.5-4-4"/><path d="M5 12h14"/><path d="M5 12h14"/><path d="M8 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h2"/><path d="M18 3h-2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h2"/></svg>
@@ -395,19 +395,19 @@ get_header();
         </div>
       </section>
 
-      <!-- Gallery Section -->
+      
       <section class="py-12 bg-white">
         <div class="container mx-auto px-6">
           <!-- Rounded Container -->
           <div class="relative max-w-6xl mx-auto bg-white rounded-3xl p-8 md:p-12">
-            <!-- Gallery label -->
+            
             <div class="text-center mb-8 flex items-center justify-center space-x-4">
               <div class="w-12 h-px bg-gray-300"></div>
               <span class="text-gray-600 font-medium italic">Galería</span>
               <div class="w-12 h-px bg-gray-300"></div>
             </div>
 
-            <!-- Main Title -->
+            
             <div class="text-center mb-12">
               <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 Descubre los paisajes, la cultura y momentos únicos de Italia
@@ -417,50 +417,50 @@ get_header();
               </p>
             </div>
 
-            <!-- Gallery Grid - Masonry Style -->
+            
             <div class="relative mb-8">
-              <!-- Top Row -->
+              
               <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-                <!-- Image 1 - Tall -->
+                
                 <div class="relative rounded-2xl overflow-hidden group cursor-pointer h-64 md:h-80">
                   <img src="<?php echo get_theme_file_uri('/assets/images/venice-canal.jpg'); ?>" alt="Canal de Venecia con edificios coloridos" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300">
                 </div>
 
-                <!-- Image 2 - Full Height -->
+                
                 <div class="relative rounded-2xl overflow-hidden group cursor-pointer h-64 md:h-80">
                   <img src="<?php echo get_theme_file_uri('/assets/images/milan-cathedral.jpg'); ?>" alt="Catedral de Milán - Arquitectura gótica" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300">
                 </div>
 
-                <!-- Image 3 - Full Height -->
+                
                 <div class="relative rounded-2xl overflow-hidden group cursor-pointer h-64 md:h-80">
                   <img src="<?php echo get_theme_file_uri('/assets/images/david-florence.jpg'); ?>" alt="David de Miguel Ángel en Florencia" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300">
                 </div>
 
-                <!-- Image 4 - Tall -->
+                
                 <div class="relative rounded-2xl overflow-hidden group cursor-pointer h-64 md:h-80">
                   <img src="<?php echo get_theme_file_uri('/assets/images/positano-amalfi.jpg'); ?>" alt="Positano en la Costa Amalfitana" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300">
                 </div>
               </div>
 
-              <!-- Bottom Row -->
+              
               <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <!-- Image 5 - Wide -->
+                
                 <div class="relative rounded-2xl overflow-hidden group cursor-pointer h-48 md:h-64">
                   <img src="<?php echo get_theme_file_uri('/assets/images/pompeii-vesuvius.jpg'); ?>" alt="Ruinas de Pompeya con el Monte Vesubio" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300">
                 </div>
 
-                <!-- Image 6 - Wide -->
+                
                 <div class="relative rounded-2xl overflow-hidden group cursor-pointer h-48 md:h-64">
                   <img src="<?php echo get_theme_file_uri('/assets/images/cinque-terre.jpg'); ?>" alt="Cinque Terre - Pueblo colorido en acantilado" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300">
                 </div>
 
-                <!-- Image 7 - Wide -->
+                
                 <div class="relative rounded-2xl overflow-hidden group cursor-pointer h-48 md:h-64">
                   <img src="<?php echo get_theme_file_uri('/assets/images/lake-como.jpg'); ?>" alt="Lago Como - Escena callejera encantadora" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300">
                 </div>
               </div>
 
-              <!-- Explore Gallery Button - Centered in section -->
+              
               <div class="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
                 <div class="pointer-events-auto">
                   <button class="bg-white text-gray-900 hover:bg-gray-100 px-8 py-4 rounded-full text-lg font-medium shadow-lg border border-gray-200 mt-16">
