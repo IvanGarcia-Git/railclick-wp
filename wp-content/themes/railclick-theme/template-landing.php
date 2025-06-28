@@ -76,7 +76,7 @@ get_header();
                       Login
                     </button>
                   </a>
-                  <button class="bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white text-sm px-4 py-2">
+                  <button class="bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white text-sm px-4 py-2 flex items-center justify-center rounded-full">
                     Buscar Trenes
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 h-3 w-3"><path d="m9 18 6-6-6-6"/></svg>
                   </button>
@@ -115,7 +115,7 @@ get_header();
                     <option value="napoles" class="text-gray-900">Nápoles</option>
                   </select>
                   <input type="date" class="w-full bg-transparent text-white placeholder-white/70 px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/40 border border-white/30 [color-scheme:dark]" placeholder="Fecha">
-                  <button class="w-full bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white py-3 rounded-xl transition-all duration-300">
+                  <button class="w-full bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white py-3 rounded-full flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 h-4 w-4"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                     Buscar Trenes
                   </button>
@@ -148,7 +148,7 @@ get_header();
                   <div class="flex-1">
                     <input type="date" class="w-full bg-transparent text-white placeholder-white/70 px-3 lg:px-4 py-3 rounded-full focus:outline-none focus:ring-2 focus:ring-white/30 border-0 [color-scheme:dark] text-sm lg:text-base" placeholder="Fecha">
                   </div>
-                  <button class="bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white px-6 lg:px-8 py-3 rounded-full transition-all duration-300 hover:scale-105 shadow-lg text-sm lg:text-base">
+                  <button class="bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white px-6 lg:px-8 py-3 rounded-full transition-all duration-300 hover:scale-105 shadow-lg text-sm lg:text-base flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 h-4 w-4"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                     Buscar
                   </button>
@@ -288,7 +288,7 @@ get_header();
 
             <div class="text-center">
               <a href="#tipos">
-                <button class="bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white px-8 py-3 rounded-full">
+                <button class="bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white px-8 py-3 rounded-full flex items-center justify-center mx-auto">
                   Ver Más Información
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 h-4 w-4"><path d="m9 18 6-6-6-6"/></svg>
                 </button>
@@ -386,7 +386,7 @@ get_header();
             </div>
 
             <div class="text-center mt-12">
-              <button class="bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white px-8 py-3 rounded-full">
+              <button class="bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white px-8 py-3 rounded-full flex items-center justify-center mx-auto">
                 Comparar Trenes
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 h-4 w-4"><path d="m9 18 6-6-6-6"/></svg>
               </button>
@@ -463,7 +463,7 @@ get_header();
               
               <div class="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
                 <div class="pointer-events-auto">
-                  <button class="bg-white text-gray-900 hover:bg-gray-100 px-8 py-4 rounded-full text-lg font-medium shadow-lg border border-gray-200 mt-16">
+                  <button class="bg-white text-gray-900 hover:bg-gray-100 px-8 py-4 rounded-full text-lg font-medium shadow-lg border border-gray-200 mt-16 mx-auto">
                     Explorar Galería
                   </button>
                 </div>
@@ -634,7 +634,7 @@ get_header();
             </div>
 
             <div class="text-center">
-              <button class="bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white px-8 py-3 rounded-full">
+              <button class="bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white px-8 py-3 rounded-full flex items-center justify-center mx-auto">
                 Ver Todas las Estaciones
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 h-4 w-4"><path d="m9 18 6-6-6-6"/></svg>
               </button>
@@ -737,7 +737,7 @@ get_header();
             </div>
 
             <div class="text-center">
-              <button class="bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white px-8 py-3 rounded-full">
+              <button class="bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white px-8 py-3 rounded-full flex items-center justify-center mx-auto">
                 Ver Todos los Artículos
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 h-4 w-4"><path d="m9 18 6-6-6-6"/></svg>
               </button>
@@ -1048,7 +1048,7 @@ get_header();
                     <p class="text-gray-300 mb-6 leading-relaxed">
                       Nuestros expertos en viajes están aquí para ayudarte a planificar tu aventura italiana perfecta.
                     </p>
-                    <button class="bg-white text-gray-900 hover:bg-gray-100 w-full transition-all duration-300 hover:scale-105 shadow-lg">Contáctanos</button>
+                    <button class="bg-white text-gray-900 hover:bg-gray-100 w-full transition-all duration-300 hover:scale-105 shadow-lg rounded-full">Contáctanos</button>
                   </div>
                 </div>
               </div>
@@ -1083,7 +1083,7 @@ get_header();
               <div class="max-w-md mx-auto">
                 <div class="flex gap-4">
                   <input type="email" placeholder="Ingresa tu email" class="flex-1 px-4 py-3 rounded-full border border-gray-300 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                  <button class="bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white px-6 py-3 rounded-full">Suscribirse</button>
+                  <button class="bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white px-6 py-3 rounded-full flex items-center justify-center">Suscribirse</button>
                 </div>
               </div>
             </div>
