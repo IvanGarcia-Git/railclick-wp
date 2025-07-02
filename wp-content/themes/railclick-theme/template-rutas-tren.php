@@ -8,17 +8,17 @@ get_header();
 <div class="min-h-screen bg-white">
       
     <!-- Hero Section -->
-    <section class="relative h-[60vh] flex items-center justify-center px-4 sm:px-6 py-4">
+    <section class="relative h-[50vh] flex items-center justify-center px-4 sm:px-6 py-4">
         
-        <div class="relative w-full sm:w-[90vw] max-w-none sm:max-w-none h-[60vh] mx-auto rounded-3xl overflow-hidden border-2 sm:border-4 border-white shadow-lg sm:shadow-2xl">
+        <div class="relative w-full sm:w-[90vw] max-w-none sm:max-w-none h-[50vh] mx-auto rounded-3xl overflow-hidden border-2 sm:border-4 border-white shadow-lg sm:shadow-2xl">
           
             <div class="absolute inset-0">
                 <img src="<?php echo esc_url( get_post_meta( get_the_ID(), 'rutas_hero_bg_image', true ) ); ?>" alt="Rutas de Tren" class="object-cover w-full h-full" />
-                <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60"></div>
+                <div class="absolute inset-0 bg-black/40"></div>
             </div>
 
             <!-- Header -->
-            <div class="relative z-10 h-[60vh] flex flex-col">
+            <div class="relative z-10 h-[50vh] flex flex-col">
                 
                 <header class="p-4 sm:p-6 lg:p-8 flex-shrink-0">
                     <div class="flex items-center justify-between">
