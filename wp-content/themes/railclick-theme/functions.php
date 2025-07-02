@@ -12,6 +12,16 @@ function railclick_enqueue_styles() {
             '1.0.0' 
         );
     }
+    
+    // Enqueue additional styles for Tipos de Tren template
+    if (is_page_template('template-tipos-tren.php')) {
+        wp_enqueue_style( 
+            'tipos-animations-css', 
+            get_template_directory_uri() . '/assets/css/rutas-animations.css', 
+            array('main-css'), 
+            '1.0.0' 
+        );
+    }
 }
 add_action( 'wp_enqueue_scripts', 'railclick_enqueue_styles' );
 
@@ -30,6 +40,17 @@ function railclick_enqueue_scripts() {
             'rutas-animations', 
             get_template_directory_uri() . '/assets/js/rutas-animations.js', 
             array('rutas-filters'), 
+            '1.0.0', 
+            true 
+        );
+    }
+    
+    // Enqueue scripts for Tipos de Tren template
+    if (is_page_template('template-tipos-tren.php')) {
+        wp_enqueue_script( 
+            'tipos-animations', 
+            get_template_directory_uri() . '/assets/js/rutas-animations.js', 
+            array(), 
             '1.0.0', 
             true 
         );
@@ -2688,4 +2709,265 @@ function railclick_create_rutas_example_content() {
     
     return false;
 }
+
+// === METABOXES PARA TEMPLATE TIPOS DE TREN ===
+
+// Registrar metaboxes para Tipos de Tren
+function railclick_add_tipos_meta_boxes() {
+    add_meta_box(
+        'tipos_hero_meta_box',
+        __( 'Tipos - Configuración Hero', 'railclick-theme' ),
+        'railclick_render_tipos_hero_meta_box',
+        'page',
+        'normal',
+        'high'
+    );
+    
+    add_meta_box(
+        'tipos_regional_meta_box',
+        __( 'Tipos - Tren Regional', 'railclick-theme' ),
+        'railclick_render_tipos_regional_meta_box',
+        'page',
+        'normal',
+        'high'
+    );
+    
+    add_meta_box(
+        'tipos_alta_velocidad_meta_box',
+        __( 'Tipos - Tren de Alta Velocidad', 'railclick-theme' ),
+        'railclick_render_tipos_alta_velocidad_meta_box',
+        'page',
+        'normal',
+        'high'
+    );
+    
+    add_meta_box(
+        'tipos_nocturno_meta_box',
+        __( 'Tipos - Tren Nocturno', 'railclick-theme' ),
+        'railclick_render_tipos_nocturno_meta_box',
+        'page',
+        'normal',
+        'high'
+    );
+    
+    add_meta_box(
+        'tipos_panoramico_meta_box',
+        __( 'Tipos - Tren Panorámico', 'railclick-theme' ),
+        'railclick_render_tipos_panoramico_meta_box',
+        'page',
+        'normal',
+        'high'
+    );
+}
+add_action( 'add_meta_boxes', 'railclick_add_tipos_meta_boxes' );
+
+// Renderizar metabox Hero para Tipos
+function railclick_render_tipos_hero_meta_box( $post ) {
+    wp_nonce_field( basename( __FILE__ ), 'tipos_hero_nonce' );
+
+    $hero_subtitle = get_post_meta( $post->ID, 'tipos_hero_subtitle', true );
+    $hero_title = get_post_meta( $post->ID, 'tipos_hero_title', true );
+    $hero_description = get_post_meta( $post->ID, 'tipos_hero_description', true );
+    $hero_bg_image = get_post_meta( $post->ID, 'tipos_hero_bg_image', true );
+
+    ?>
+    <table class="form-table">
+        <tr>
+            <th><label for="tipos_hero_subtitle">Subtítulo Hero</label></th>
+            <td><input type="text" name="tipos_hero_subtitle" id="tipos_hero_subtitle" value="<?php echo esc_attr( $hero_subtitle ); ?>" class="large-text" /></td>
+        </tr>
+        <tr>
+            <th><label for="tipos_hero_title">Título Principal</label></th>
+            <td><input type="text" name="tipos_hero_title" id="tipos_hero_title" value="<?php echo esc_attr( $hero_title ); ?>" class="large-text" /></td>
+        </tr>
+        <tr>
+            <th><label for="tipos_hero_description">Descripción</label></th>
+            <td><textarea name="tipos_hero_description" id="tipos_hero_description" class="large-text" rows="3"><?php echo esc_textarea( $hero_description ); ?></textarea></td>
+        </tr>
+        <tr>
+            <th><label for="tipos_hero_bg_image">Imagen de Fondo</label></th>
+            <td>
+                <input type="text" name="tipos_hero_bg_image" id="tipos_hero_bg_image" value="<?php echo esc_attr( $hero_bg_image ); ?>" class="large-text" />
+                <button type="button" class="button" id="tipos_hero_bg_image_button">Seleccionar Imagen</button>
+            </td>
+        </tr>
+    </table>
+    
+    <script>
+    jQuery(document).ready(function($) {
+        $('#tipos_hero_bg_image_button').click(function(e) {
+            e.preventDefault();
+            var image = wp.media({
+                title: 'Seleccionar Imagen',
+                multiple: false
+            }).open().on('select', function() {
+                var uploaded_image = image.state().get('selection').first();
+                var image_url = uploaded_image.toJSON().url;
+                $('#tipos_hero_bg_image').val(image_url);
+            });
+        });
+    });
+    </script>
+    <?php
+}
+
+// Función genérica para renderizar metaboxes de tipos de tren
+function railclick_render_tipo_meta_box( $post, $tipo_prefix, $tipo_name ) {
+    wp_nonce_field( basename( __FILE__ ), $tipo_prefix . '_nonce' );
+
+    $fields = [
+        'name' => 'Nombre del Tipo',
+        'description' => 'Descripción',
+        'capacity' => 'Capacidad (pasajeros)',
+        'speed' => 'Velocidad Máxima',
+        'services' => 'Servicios Incluidos (uno por línea)',
+        'features' => 'Características (una por línea)',
+        'price_from' => 'Precio desde (€)',
+        'image_1' => 'Imagen Principal',
+        'image_2' => 'Imagen Secundaria',
+        'image_3' => 'Imagen Adicional'
+    ];
+
+    ?>
+    <table class="form-table">
+        <?php foreach ($fields as $field_key => $field_label): ?>
+            <?php
+            $field_name = $tipo_prefix . '_' . $field_key;
+            $field_value = get_post_meta( $post->ID, $field_name, true );
+            ?>
+            <tr>
+                <th><label for="<?php echo esc_attr($field_name); ?>"><?php echo esc_html($field_label); ?></label></th>
+                <td>
+                    <?php if (in_array($field_key, ['description', 'services', 'features'])): ?>
+                        <textarea name="<?php echo esc_attr($field_name); ?>" id="<?php echo esc_attr($field_name); ?>" class="large-text" rows="4"><?php echo esc_textarea( $field_value ); ?></textarea>
+                    <?php elseif (strpos($field_key, 'image') !== false): ?>
+                        <input type="text" name="<?php echo esc_attr($field_name); ?>" id="<?php echo esc_attr($field_name); ?>" value="<?php echo esc_attr( $field_value ); ?>" class="large-text" />
+                        <button type="button" class="button image-upload-button" data-target="<?php echo esc_attr($field_name); ?>">Seleccionar Imagen</button>
+                    <?php else: ?>
+                        <input type="text" name="<?php echo esc_attr($field_name); ?>" id="<?php echo esc_attr($field_name); ?>" value="<?php echo esc_attr( $field_value ); ?>" class="large-text" />
+                    <?php endif; ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+    
+    <script>
+    jQuery(document).ready(function($) {
+        $('.image-upload-button').click(function(e) {
+            e.preventDefault();
+            var button = $(this);
+            var target = button.data('target');
+            var image = wp.media({
+                title: 'Seleccionar Imagen',
+                multiple: false
+            }).open().on('select', function() {
+                var uploaded_image = image.state().get('selection').first();
+                var image_url = uploaded_image.toJSON().url;
+                $('#' + target).val(image_url);
+            });
+        });
+    });
+    </script>
+    <?php
+}
+
+// Renderizar metaboxes específicos para cada tipo
+function railclick_render_tipos_regional_meta_box( $post ) {
+    railclick_render_tipo_meta_box( $post, 'tipo_regional', 'Tren Regional' );
+}
+
+function railclick_render_tipos_alta_velocidad_meta_box( $post ) {
+    railclick_render_tipo_meta_box( $post, 'tipo_alta_velocidad', 'Tren de Alta Velocidad' );
+}
+
+function railclick_render_tipos_nocturno_meta_box( $post ) {
+    railclick_render_tipo_meta_box( $post, 'tipo_nocturno', 'Tren Nocturno' );
+}
+
+function railclick_render_tipos_panoramico_meta_box( $post ) {
+    railclick_render_tipo_meta_box( $post, 'tipo_panoramico', 'Tren Panorámico' );
+}
+
+// Guardar datos de metaboxes de tipos
+function railclick_save_tipos_meta_boxes( $post_id ) {
+    // Verificar nonce y permisos
+    if ( ! current_user_can( 'edit_post', $post_id ) ) {
+        return;
+    }
+
+    // Lista de todos los campos a guardar
+    $hero_fields = [
+        'tipos_hero_subtitle',
+        'tipos_hero_title', 
+        'tipos_hero_description',
+        'tipos_hero_bg_image'
+    ];
+
+    $tipo_fields = [
+        'name', 'description', 'capacity', 'speed', 'services', 
+        'features', 'price_from', 'image_1', 'image_2', 'image_3'
+    ];
+
+    $tipos = ['regional', 'alta_velocidad', 'nocturno', 'panoramico'];
+
+    // Guardar campos hero
+    foreach ($hero_fields as $field) {
+        if ( isset( $_POST[$field] ) ) {
+            update_post_meta( $post_id, $field, sanitize_text_field( $_POST[$field] ) );
+        }
+    }
+
+    // Guardar campos de tipos
+    foreach ($tipos as $tipo) {
+        foreach ($tipo_fields as $field) {
+            $field_name = 'tipo_' . $tipo . '_' . $field;
+            if ( isset( $_POST[$field_name] ) ) {
+                if (in_array($field, ['description', 'services', 'features'])) {
+                    update_post_meta( $post_id, $field_name, sanitize_textarea_field( $_POST[$field_name] ) );
+                } else {
+                    update_post_meta( $post_id, $field_name, sanitize_text_field( $_POST[$field_name] ) );
+                }
+            }
+        }
+    }
+}
+add_action( 'save_post', 'railclick_save_tipos_meta_boxes' );
+
+// Incluir archivo de setup para tipos de tren
+require_once get_template_directory() . '/setup-tipos-content.php';
+
+// Auto-importar contenido de tipos de tren al activar el tema
+function railclick_auto_setup_tipos_content() {
+    // Verificar si ya se ejecutó esta función
+    if (get_option('railclick_tipos_content_imported')) {
+        return;
+    }
+    
+    // Ejecutar setup automático
+    $page_id = railclick_setup_tipos_content();
+    
+    if ($page_id) {
+        // Marcar como importado
+        update_option('railclick_tipos_content_imported', true);
+        
+        // Log para debugging (opcional)
+        error_log('RailClick: Contenido de tipos de tren importado automáticamente. Página ID: ' . $page_id);
+    }
+}
+
+// Ejecutar auto-import al cargar el tema
+add_action('after_setup_theme', 'railclick_auto_setup_tipos_content');
+
+// También ejecutar en admin_init para asegurar la importación
+add_action('admin_init', 'railclick_auto_setup_tipos_content');
+
+// Reset para desarrollo (remover en producción)
+function railclick_reset_tipos_import() {
+    if (isset($_GET['reset_tipos_import']) && current_user_can('manage_options')) {
+        delete_option('railclick_tipos_content_imported');
+        wp_redirect(admin_url());
+        exit;
+    }
+}
+add_action('admin_init', 'railclick_reset_tipos_import');
 
