@@ -1,276 +1,310 @@
-# Plan de Gestión de Contenido con Meta Boxes en WordPress
+# Plan de Implementación - Templates WordPress RailClick
 
-El objetivo es permitir la edición de imágenes, textos y enlaces de cada sección del template de página de WordPress (`template-landing.php`) directamente desde el editor de WordPress, utilizando meta boxes.
+## Resumen del Proyecto
 
-## Fase 1: Investigación y Planificación de Campos
+Implementación de tres nuevos templates personalizados para WordPress siguiendo el patrón y estilo del template actual:
 
-- [x] **1.1. Investigar la API de Meta Boxes de WordPress:** Consultar la documentación oficial para entender cómo registrar, renderizar y guardar datos de meta boxes.
-- [x] **1.2. Identificar campos de contenido por sección:** Recorrer `template-landing.php` y listar todos los elementos (imágenes, textos, enlaces) que necesitan ser editables, asignándoles un nombre de campo único.
-    - **Hero Section:** ✅ **COMPLETADO**
-        - [x] `hero_bg_image` (imagen de fondo)
-        - [x] `hero_subtitle` (texto)
-        - [x] `hero_title` (texto)
-        - [x] `hero_search_origin_options` (opciones de select)
-        - [x] `hero_search_destination_options` (opciones de select)
-        - [x] `hero_description` (texto)
-        - [x] `hero_award_image` (imagen)
-        - [x] `hero_award_text` (texto)
-        - [x] `hero_rating_text` (texto)
-    - **Popular Routes Section:** ✅ **COMPLETADO**
-        - [x] `routes_subtitle` (texto)
-        - [x] `routes_title` (texto)
-        - [x] `routes_description` (texto)
-        - [x] `route_1_image` (imagen)
-        - [x] `route_1_title` (texto)
-        - [x] `route_1_details` (texto)
-        - [x] `route_1_text` (texto)
-        - [x] `route_1_link` (enlace)
-        - [x] `route_2_image` (imagen)
-        - [x] `route_2_title` (texto)
-        - [x] `route_2_details` (texto)
-        - [x] `route_2_text` (texto)
-        - [x] `route_2_link` (enlace)
-        - [x] `route_3_image` (imagen)
-        - [x] `route_3_title` (texto)
-        - [x] `route_3_details` (texto)
-        - [x] `route_3_text` (texto)
-        - [x] `route_3_link` (enlace)
-        - [x] `routes_more_info_button_text` (texto del botón)
-        - [x] `routes_more_info_button_link` (enlace del botón)
-    - **Train Types Section:** ✅ **COMPLETADO**
-        - [x] `train_types_subtitle` (texto)
-        - [x] `train_types_title` (texto)
-        - [x] `train_types_description` (texto)
-        - [x] `train_type_1_icon` (icono SVG o clase)
-        - [x] `train_type_1_title` (texto)
-        - [x] `train_type_1_speed` (texto)
-        - [x] `train_type_1_description` (texto)
-        - [x] `train_type_1_features` (lista de características)
-        - [x] `train_type_2_icon` (icono SVG o clase)
-        - [x] `train_type_2_title` (texto)
-        - [x] `train_type_2_speed` (texto)
-        - [x] `train_type_2_description` (texto)
-        - [x] `train_type_2_features` (lista de características)
-        - [x] `train_type_3_icon` (icono SVG o clase)
-        - [x] `train_type_3_title` (texto)
-        - [x] `train_type_3_speed` (texto)
-        - [x] `train_type_3_description` (texto)
-        - [x] `train_type_3_features` (lista de características)
-        - [x] `train_types_compare_button_text` (texto del botón)
-        - [x] `train_types_compare_button_link` (enlace del botón)
-    - **Gallery Section:** ✅ **COMPLETADO**
-        - [x] `gallery_subtitle` (texto)
-        - [x] `gallery_title` (texto)
-        - [x] `gallery_description` (texto)
-        - [x] `gallery_image_1` (imagen)
-        - [x] `gallery_image_2` (imagen)
-        - [x] `gallery_image_3` (imagen)
-        - [x] `gallery_image_4` (imagen)
-        - [x] `gallery_image_5` (imagen)
-        - [x] `gallery_image_6` (imagen)
-        - [x] `gallery_image_7` (imagen)
-        - [x] `gallery_explore_button_text` (texto del botón)
-        - [x] `gallery_explore_button_link` (enlace del botón)
-    - **Main Train Stations Section:** ✅ **COMPLETADO**
-        - [x] `stations_subtitle` (texto)
-        - [x] `stations_title` (texto)
-        - [x] `stations_description` (texto)
-        - [x] `station_1_image` (imagen)
-        - [x] `station_1_title` (texto)
-        - [x] `station_1_subtitle` (texto)
-        - [x] `station_1_description` (texto)
-        - [x] `station_1_services` (lista de servicios)
-        - [x] `station_1_connections` (lista de conexiones)
-        - [x] `station_2_image` (imagen)
-        - [x] `station_2_title` (texto)
-        - [x] `station_2_subtitle` (texto)
-        - [x] `station_2_description` (texto)
-        - [x] `station_2_services` (lista de servicios)
-        - [x] `station_2_connections` (lista de conexiones)
-        - [x] `station_3_image` (imagen)
-        - [x] `station_3_title` (texto)
-        - [x] `station_3_subtitle` (texto)
-        - [x] `station_3_description` (texto)
-        - [x] `station_3_services` (lista de servicios)
-        - [x] `station_3_connections` (lista de conexiones)
-        - [x] `station_4_image` (imagen)
-        - [x] `station_4_title` (texto)
-        - [x] `station_4_subtitle` (texto)
-        - [x] `station_4_description` (texto)
-        - [x] `station_4_services` (lista de servicios)
-        - [x] `station_4_connections` (lista de conexiones)
-        - [x] `stations_all_button_text` (texto del botón)
-        - [x] `stations_all_button_link` (enlace del botón)
-    - **Blog Section:** ✅ **COMPLETADO**
-        - [x] `blog_subtitle` (texto)
-        - [x] `blog_title` (texto)
-        - [x] `blog_description` (texto)
-        - [x] `blog_post_1_image` (imagen)
-        - [x] `blog_post_1_date` (texto)
-        - [x] `blog_post_1_title` (texto)
-        - [x] `blog_post_1_text` (texto)
-        - [x] `blog_post_1_link` (enlace)
-        - [x] `blog_post_2_image` (imagen)
-        - [x] `blog_post_2_date` (texto)
-        - [x] `blog_post_2_title` (texto)
-        - [x] `blog_post_2_text` (texto)
-        - [x] `blog_post_2_link` (enlace)
-        - [x] `blog_post_3_image` (imagen)
-        - [x] `blog_post_3_date` (texto)
-        - [x] `blog_post_3_title` (texto)
-        - [x] `blog_post_3_text` (texto)
-        - [x] `blog_post_3_link` (enlace)
-        - [x] `blog_all_articles_button_text` (texto del botón)
-        - [x] `blog_all_articles_button_link` (enlace del botón)
-    - **Why Travel With Us Section:** ✅ **COMPLETADO**
-        - [x] `why_us_subtitle` (texto)
-        - [x] `why_us_title` (texto)
-        - [x] `why_us_feature_1_icon` (icono SVG o clase)
-        - [x] `why_us_feature_1_title` (texto)
-        - [x] `why_us_feature_1_description` (texto)
-        - [x] `why_us_feature_2_icon` (icono SVG o clase)
-        - [x] `why_us_feature_2_title` (texto)
-        - [x] `why_us_feature_2_description` (texto)
-        - [x] `why_us_feature_3_icon` (icono SVG o clase)
-        - [x] `why_us_feature_3_title` (texto)
-        - [x] `why_us_feature_3_description` (texto)
-        - [x] `why_us_feature_4_icon` (icono SVG o clase)
-        - [x] `why_us_feature_4_title` (texto)
-        - [x] `why_us_feature_4_description` (texto)
-    - **Reviews Section:** ✅ **COMPLETADO**
-        - [x] `reviews_subtitle` (texto)
-        - [x] `reviews_title` (texto)
-        - [x] `review_1_text` (texto)
-        - [x] `review_1_author` (texto)
-        - [x] `review_1_location` (texto)
-        - [x] `review_2_text` (texto)
-        - [x] `review_2_author` (texto)
-        - [x] `review_2_location` (texto)
-        - [x] `review_3_text` (texto)
-        - [x] `review_3_author` (texto)
-        - [x] `review_3_location` (texto)
-        - [x] `reviews_overall_rating` (texto)
-        - [x] `reviews_total_reviews` (texto)
-    - **FAQ Section:** ✅ **COMPLETADO**
-        - [x] `faq_subtitle` (texto)
-        - [x] `faq_title` (texto)
-        - [x] `faq_question_1` (texto)
-        - [x] `faq_answer_1` (texto - se implementará como un campo de texto largo)
-        - [x] `faq_question_2` (texto)
-        - [x] `faq_answer_2` (texto)
-        - [x] `faq_question_3` (texto)
-        - [x] `faq_answer_3` (texto)
-        - [x] `faq_question_4` (texto)
-        - [x] `faq_answer_4` (texto)
-        - [x] `faq_question_5` (texto)
-        - [x] `faq_answer_5` (texto)
-        - [x] `faq_contact_title` (texto)
-        - [x] `faq_contact_description` (texto)
-        - [x] `faq_contact_button_text` (texto del botón)
-        - [x] `faq_contact_button_link` (enlace del botón)
-    - **Newsletter Section:** ✅ **COMPLETADO**
-        - [x] `newsletter_bg_image` (imagen de fondo)
-        - [x] `newsletter_subtitle` (texto)
-        - [x] `newsletter_title` (texto)
-        - [x] `newsletter_button_text` (texto del botón)
-    - **Footer:** ✅ **COMPLETADO**
-        - [x] `footer_logo_text` (texto)
-        - [x] `footer_description` (texto)
-        - [x] `footer_routes_title` (texto)
-        - [x] `footer_route_1_text` (texto)
-        - [x] `footer_route_1_link` (enlace)
-        - [x] `footer_route_2_text` (texto)
-        - [x] `footer_route_2_link` (enlace)
-        - [x] `footer_route_3_text` (texto)
-        - [x] `footer_route_3_link` (enlace)
-        - [x] `footer_all_routes_text` (texto)
-        - [x] `footer_all_routes_link` (enlace)
-        - [x] `footer_train_types_title` (texto)
-        - [x] `footer_train_type_1_text` (texto)
-        - [x] `footer_train_type_1_link` (enlace)
-        - [x] `footer_train_type_2_text` (texto)
-        - [x] `footer_train_type_2_link` (enlace)
-        - [x] `footer_train_type_3_text` (texto)
-        - [x] `footer_train_type_3_link` (enlace)
-        - [x] `footer_regional_trains_text` (texto)
-        - [x] `footer_regional_trains_link` (enlace)
-        - [x] `footer_support_title` (texto)
-        - [x] `footer_support_contact_text` (texto)
-        - [x] `footer_support_contact_link` (enlace)
-        - [x] `footer_support_faqs_text` (texto)
-        - [x] `footer_support_faqs_link` (enlace)
-        - [x] `footer_support_travel_guide_text` (texto)
-        - [x] `footer_support_travel_guide_link` (enlace)
-        - [x] `footer_support_booking_help_text` (texto)
-        - [x] `footer_support_booking_help_link` (enlace)
-        - [x] `footer_legal_title` (texto)
-        - [x] `footer_legal_notice_text` (texto)
-        - [x] `footer_legal_notice_link` (enlace)
-        - [x] `footer_privacy_policy_text` (texto)
-        - [x] `footer_privacy_policy_link` (enlace)
-        - [x] `footer_terms_conditions_text` (texto)
-        - [x] `footer_terms_conditions_link` (enlace)
-        - [x] `footer_email` (texto)
-        - [x] `footer_copyright` (texto)
+1. **Template "Rutas de Tren"** - Página detallada para mostrar todas las rutas disponibles
+2. **Template "Tipos de Tren"** - Página para mostrar los diferentes tipos de tren 
+3. **Template "Estaciones"** - Página para mostrar las estaciones disponibles
 
-## Fase 2: Implementación de Meta Boxes en `functions.php`
-
-- [x] **2.1. Registrar los Meta Boxes:** Utilizar `add_meta_boxes` para añadir un meta box por cada sección principal del template.
-- [x] **2.2. Definir las funciones de callback para cada Meta Box:**
-    - [x] Crear campos de texto (`<input type="text">` o `<textarea>`) para los textos y enlaces.
-    - [x] Crear campos de subida de medios para las imágenes, utilizando el Media Uploader de WordPress.
-    - [x] Para las listas (características, servicios, conexiones), considerar campos de texto separados o un campo de texto largo donde el usuario pueda introducir ítems separados por comas o saltos de línea.
-- [x] **2.3. Guardar los datos de los Meta Boxes:** Implementar la lógica para guardar los datos introducidos en los campos personalizados (`update_post_meta`).
-
-## Fase 3: Integración de Datos en `template-landing.php`
-
-- [x] **3.1. Recuperar los datos guardados:** Utilizar `get_post_meta` en `template-landing.php` para obtener los valores de los campos personalizados.
-- [x] **3.2. Reemplazar contenido hardcodeado:** Sustituir los textos, URLs de imágenes y URLs de enlaces estáticos por las variables PHP que contienen los datos de los meta boxes.
-    - [x] Asegurarse de que las imágenes se muestren correctamente utilizando `wp_get_attachment_image_src` para obtener la URL de la imagen subida.
-    - [x] Para los iconos, si son SVG en línea, se mantendrán así o se considerará un campo para la clase del icono si se usa una librería de iconos.
-
-## Fase 4: Pruebas y Refinamiento
-
-- [ ] **4.1. Probar la edición de contenido:** Crear una nueva página con el template "Landing Page" y verificar que todos los campos de los meta boxes aparecen y se pueden editar.
-- [ ] **4.2. Verificar la visualización en el frontend:** Comprobar que los cambios realizados en el backend se reflejan correctamente en la página publicada, manteniendo el diseño y la funcionalidad.
-- [ ] **4.3. Refinamiento:** Ajustar estilos, añadir validaciones o mejorar la interfaz de usuario de los meta boxes si es necesario.
+Cada template incluirá metaboxes personalizadas para gestión de contenido desde el panel de WordPress.
 
 ---
 
-## 📊 RESUMEN DEL ESTADO ACTUAL
+## FASE 1: PREPARACIÓN Y SETUP
+*Duración estimada: 2-3 horas*
 
-### ✅ **COMPLETADO (Fases 1-3)**
+### ✅ Tareas Completadas
+- [x] **T1.1** - Analizar estructura del template existente
+- [x] **T1.2** - Revisar mejores prácticas WordPress 2024
+- [x] **T1.3** - Documentar patrones de código actuales
+
+### 🔄 Tareas Pendientes
+- [ ] **T1.4** - Crear backup de functions.php actual
+- [ ] **T1.5** - Verificar compatibilidad Tailwind CSS
+- [ ] **T1.6** - Definir estructura de campos para cada template
+
+---
+
+## FASE 2: TEMPLATE "RUTAS DE TREN"
+*Duración estimada: 6-8 horas*
+
+### 📋 Análisis de Requisitos
+- Mostrar listado completo de rutas de tren
+- Información detallada de cada ruta (origen, destino, duración, precio, horarios)
+- Galería de imágenes por ruta
+- Filtros y búsqueda
+- Enlaces para reservas
+
+### 🔧 Tareas de Implementación
+
+#### 2.1 Estructura del Template
+- [ ] **T2.1.1** - Crear `template-rutas-tren.php`
+- [ ] **T2.1.2** - Definir estructura HTML con Tailwind CSS
+- [ ] **T2.1.3** - Implementar diseño responsive
+- [ ] **T2.1.4** - Crear secciones: Hero, Filtros, Listado, CTA
+
+#### 2.2 Metaboxes - Configuración General
+- [ ] **T2.2.1** - Crear metabox "Rutas - Configuración Hero"
+  - Título principal
+  - Subtítulo
+  - Descripción
+  - Imagen de fondo
+- [ ] **T2.2.2** - Crear metabox "Rutas - Filtros y Búsqueda"
+  - Texto placeholder búsqueda
+  - Opciones de filtro por origen
+  - Opciones de filtro por destino
+  - Opciones de filtro por duración
+
+#### 2.3 Metaboxes - Contenido de Rutas
+- [ ] **T2.3.1** - Crear metabox "Rutas - Ruta 1"
+  - Nombre de la ruta
+  - Origen y destino
+  - Duración del viaje
+  - Precio desde
+  - Descripción
+  - Galería de imágenes (3-5 imágenes)
+  - Horarios disponibles
+  - Enlace de reserva
+- [ ] **T2.3.2** - Crear metabox "Rutas - Ruta 2" (mismos campos)
+- [ ] **T2.3.3** - Crear metabox "Rutas - Ruta 3" (mismos campos)
+- [ ] **T2.3.4** - Crear metabox "Rutas - Ruta 4" (mismos campos)
+- [ ] **T2.3.5** - Crear metabox "Rutas - Ruta 5" (mismos campos)
+- [ ] **T2.3.6** - Crear metabox "Rutas - Ruta 6" (mismos campos)
+
+#### 2.4 Funcionalidad Backend
+- [ ] **T2.4.1** - Registrar metaboxes en functions.php
+- [ ] **T2.4.2** - Implementar funciones de guardado con sanitización
+- [ ] **T2.4.3** - Añadir verificación de nonce para seguridad
+- [ ] **T2.4.4** - Integrar media uploader para imágenes
+
+#### 2.5 Funcionalidad Frontend
+- [ ] **T2.5.1** - Renderizar datos de metaboxes en template
+- [ ] **T2.5.2** - Implementar escape de datos para seguridad
+- [ ] **T2.5.3** - Crear sistema de filtros con JavaScript
+- [ ] **T2.5.4** - Añadir animaciones y transiciones
+
+---
+
+## FASE 3: TEMPLATE "TIPOS DE TREN"
+*Duración estimada: 5-6 horas*
+
+### 📋 Análisis de Requisitos
+- Mostrar diferentes tipos de tren disponibles
+- Características y servicios de cada tipo
+- Comparativa de precios y comodidades
+- Galería visual de cada tipo
+- Información técnica y capacidad
+
+### 🔧 Tareas de Implementación
+
+#### 3.1 Estructura del Template
+- [ ] **T3.1.1** - Crear `template-tipos-tren.php`
+- [ ] **T3.1.2** - Definir estructura HTML con Tailwind CSS
+- [ ] **T3.1.3** - Implementar diseño responsive
+- [ ] **T3.1.4** - Crear secciones: Hero, Comparativa, Detalles, CTA
+
+#### 3.2 Metaboxes - Configuración General
+- [ ] **T3.2.1** - Crear metabox "Tipos - Configuración Hero"
+  - Título principal
+  - Subtítulo
+  - Descripción
+  - Imagen de fondo
+
+#### 3.3 Metaboxes - Tipos de Tren
+- [ ] **T3.3.1** - Crear metabox "Tipos - Tren Regional"
+  - Nombre del tipo
+  - Descripción corta
+  - Características principales
+  - Servicios incluidos
+  - Capacidad de pasajeros
+  - Velocidad máxima
+  - Galería de imágenes (3-4 imágenes)
+  - Precio estimado desde
+- [ ] **T3.3.2** - Crear metabox "Tipos - Tren de Alta Velocidad" (mismos campos)
+- [ ] **T3.3.3** - Crear metabox "Tipos - Tren Nocturno" (mismos campos)
+- [ ] **T3.3.4** - Crear metabox "Tipos - Tren Panorámico" (mismos campos)
+
+#### 3.4 Funcionalidad Backend
+- [ ] **T3.4.1** - Registrar metaboxes en functions.php
+- [ ] **T3.4.2** - Implementar funciones de guardado con sanitización
+- [ ] **T3.4.3** - Añadir verificación de nonce para seguridad
+- [ ] **T3.4.4** - Integrar media uploader para imágenes
+
+#### 3.5 Funcionalidad Frontend
+- [ ] **T3.5.1** - Renderizar datos de metaboxes en template
+- [ ] **T3.5.2** - Implementar escape de datos para seguridad
+- [ ] **T3.5.3** - Crear tabla comparativa responsiva
+- [ ] **T3.5.4** - Añadir tabs para navegación entre tipos
+
+---
+
+## FASE 4: TEMPLATE "ESTACIONES"
+*Duración estimada: 5-6 horas*
+
+### 📋 Análisis de Requisitos
+- Mostrar estaciones principales y secundarias
+- Información de servicios y facilidades
+- Ubicación y direcciones
+- Horarios de operación
+- Conexiones disponibles
+
+### 🔧 Tareas de Implementación
+
+#### 4.1 Estructura del Template
+- [ ] **T4.1.1** - Crear `template-estaciones.php`
+- [ ] **T4.1.2** - Definir estructura HTML con Tailwind CSS
+- [ ] **T4.1.3** - Implementar diseño responsive
+- [ ] **T4.1.4** - Crear secciones: Hero, Mapa, Listado, Servicios
+
+#### 4.2 Metaboxes - Configuración General
+- [ ] **T4.2.1** - Crear metabox "Estaciones - Configuración Hero"
+  - Título principal
+  - Subtítulo
+  - Descripción
+  - Imagen de fondo
+
+#### 4.3 Metaboxes - Estaciones Principales
+- [ ] **T4.3.1** - Crear metabox "Estaciones - Estación Central"
+  - Nombre de la estación
+  - Tipo (Principal/Secundaria)
+  - Dirección completa
+  - Horarios de operación
+  - Servicios disponibles
+  - Facilidades (WiFi, restaurantes, tiendas, etc.)
+  - Conexiones de transporte
+  - Galería de imágenes (3-4 imágenes)
+  - Información de contacto
+- [ ] **T4.3.2** - Crear metabox "Estaciones - Estación Norte" (mismos campos)
+- [ ] **T4.3.3** - Crear metabox "Estaciones - Estación Sur" (mismos campos)
+- [ ] **T4.3.4** - Crear metabox "Estaciones - Estación Este" (mismos campos)
+- [ ] **T4.3.5** - Crear metabox "Estaciones - Estación Oeste" (mismos campos)
+
+#### 4.4 Funcionalidad Backend
+- [ ] **T4.4.1** - Registrar metaboxes en functions.php
+- [ ] **T4.4.2** - Implementar funciones de guardado con sanitización
+- [ ] **T4.4.3** - Añadir verificación de nonce para seguridad
+- [ ] **T4.4.4** - Integrar media uploader para imágenes
+
+#### 4.5 Funcionalidad Frontend
+- [ ] **T4.5.1** - Renderizar datos de metaboxes en template
+- [ ] **T4.5.2** - Implementar escape de datos para seguridad
+- [ ] **T4.5.3** - Crear mapa interactivo con ubicaciones
+- [ ] **T4.5.4** - Añadir filtros por tipo de estación y servicios
+
+---
+
+## FASE 5: TESTING Y REFINAMIENTO
+*Duración estimada: 3-4 horas*
+
+### 🧪 Testing Funcional
+- [ ] **T5.1** - Probar creación y edición de páginas con cada template
+- [ ] **T5.2** - Verificar guardado correcto de todos los campos
+- [ ] **T5.3** - Probar subida y visualización de imágenes
+- [ ] **T5.4** - Verificar responsive design en móviles y tablets
+
+### 🔍 Testing de Seguridad
+- [ ] **T5.5** - Verificar sanitización de inputs
+- [ ] **T5.6** - Probar verificación de nonces
+- [ ] **T5.7** - Verificar escape de outputs
+- [ ] **T5.8** - Testing de permisos de usuario
+
+### 🎨 Refinamiento Visual
+- [ ] **T5.9** - Ajustar espaciados y tipografías
+- [ ] **T5.10** - Optimizar imágenes y performance
+- [ ] **T5.11** - Mejorar animaciones y transiciones
+- [ ] **T5.12** - Verificar consistencia con diseño actual
+
+---
+
+## FASE 6: DOCUMENTACIÓN Y ENTREGA
+*Duración estimada: 2 horas*
+
+### 📚 Documentación
+- [ ] **T6.1** - Documentar nuevas funciones en código
+- [ ] **T6.2** - Crear guía de uso para editores
+- [ ] **T6.3** - Documentar campos de metaboxes
+- [ ] **T6.4** - Crear backup final del código
+
+### 🚀 Entrega
+- [ ] **T6.5** - Crear páginas de ejemplo con contenido
+- [ ] **T6.6** - Testing final completo
+- [ ] **T6.7** - Revisión de código y cleanup
+- [ ] **T6.8** - Entrega y handover
+
+---
+
+## Especificaciones Técnicas
+
+### Archivos que se Crearán
+```
+wp-content/themes/railclick-theme/
+├── template-rutas-tren.php
+├── template-tipos-tren.php
+├── template-estaciones.php
+└── functions.php (modificado)
+```
+
+### Patrones de Código a Seguir
+- **Naming Convention**: `railclick_[template]_[section]_meta_box`
+- **Security**: Nonces, sanitización con `sanitize_text_field()`
+- **Output**: Escape con `esc_html()`, `esc_url()`, `esc_attr()`
+- **CSS**: Clases Tailwind CSS siguiendo patrón actual
+- **JavaScript**: jQuery para media uploader
+
+### Campos Comunes por Metabox
+- **Imágenes**: Input + botón upload + preview
+- **Textos**: Input text con placeholder
+- **URLs**: Input url con validación
+- **Descripciones**: Textarea con conteo de caracteres
+- **Listas**: Checkboxes para servicios/características
+
+---
+
+## Consideraciones Adicionales
+
+### Performance
+- Lazy loading para imágenes
+- Minificación de CSS cuando sea necesario
+- Optimización de consultas a base de datos
+
+### SEO
+- Meta titles y descriptions personalizables
+- Schema markup para contenido estructurado
+- URLs amigables para SEO
+
+### Compatibilidad
+- WordPress 5.8+
+- PHP 7.4+
+- Gutenberg compatible
+- Mobile-first responsive
+
+### Backup y Seguridad
+- Backup antes de cada modificación
+- Testing en entorno de desarrollo
+- Validación de permisos de usuario
+- Sanitización completa de inputs
+
+---
+
+## Estado del Proyecto
+
+**Progreso General**: 15% (3/20 fases completadas)
+
+**Última Actualización**: 2 de Julio 2025
+
+**Próxima Tarea**: T1.4 - Crear backup de functions.php actual
+
+---
+
+## Historial de Proyecto Anterior
+
+### ✅ **Template Landing Page - COMPLETADO**
 - **Fase 1**: Investigación y Planificación ✅ **COMPLETADO**
 - **Fase 2**: Implementación de Meta Boxes ✅ **COMPLETADO** 
 - **Fase 3**: Integración de Datos en Template ✅ **COMPLETADO**
+- **Meta Boxes Implementados**: 11 secciones con ~179 campos personalizables
+- **Funcionalidades**: Sistema completo de metaboxes con Media Uploader, seguridad y validaciones
 
-### 🚧 **PENDIENTE (Fase 4)**
-- **Fase 4**: Pruebas y Refinamiento ⏳ **EN ESPERA**
-
-### 📋 **IMPLEMENTACIÓN REALIZADA**
-
-**Meta Boxes Registrados (11 secciones):**
-1. ✅ Hero Section - 9 campos
-2. ✅ Popular Routes - 20 campos  
-3. ✅ Train Types - 20 campos
-4. ✅ Gallery - 10 campos
-5. ✅ Main Train Stations - 28 campos
-6. ✅ Blog - 15 campos
-7. ✅ Why Travel With Us - 14 campos
-8. ✅ Reviews - 13 campos
-9. ✅ FAQ - 16 campos
-10. ✅ Newsletter - 4 campos
-11. ✅ Footer - 30+ campos
-
-**🎯 Total de campos implementados: ~179 campos personalizables**
-
-**Funcionalidades Implementadas:**
-- ✅ Registro completo de meta boxes en `functions.php`
-- ✅ Funciones de renderizado con interfaz de usuario
-- ✅ Integración completa del Media Uploader para imágenes
-- ✅ Funciones de guardado con seguridad (nonces, capacidades)
-- ✅ Integración dinámica completa en `template-landing.php`
-- ✅ Soporte JavaScript para subida de medios
-- ✅ Validaciones y protecciones de seguridad
-
-**🔧 El sistema está completamente funcional y listo para uso en producción.**
+El sistema actual está completamente funcional y listo para uso en producción. Los nuevos templates seguirán el mismo patrón y estándares de calidad.
