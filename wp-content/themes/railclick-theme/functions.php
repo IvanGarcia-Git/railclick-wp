@@ -2,9 +2,40 @@
 
 function railclick_enqueue_styles() {
     wp_enqueue_style( 'main-css', get_template_directory_uri() . '/assets/css/style.css' );
+    
+    // Enqueue additional styles for Rutas de Tren template
+    if (is_page_template('template-rutas-tren.php')) {
+        wp_enqueue_style( 
+            'rutas-animations-css', 
+            get_template_directory_uri() . '/assets/css/rutas-animations.css', 
+            array('main-css'), 
+            '1.0.0' 
+        );
+    }
 }
 add_action( 'wp_enqueue_scripts', 'railclick_enqueue_styles' );
 
+function railclick_enqueue_scripts() {
+    // Enqueue scripts for Rutas de Tren template
+    if (is_page_template('template-rutas-tren.php')) {
+        wp_enqueue_script( 
+            'rutas-filters', 
+            get_template_directory_uri() . '/assets/js/rutas-filters.js', 
+            array(), 
+            '1.0.0', 
+            true 
+        );
+        
+        wp_enqueue_script( 
+            'rutas-animations', 
+            get_template_directory_uri() . '/assets/js/rutas-animations.js', 
+            array('rutas-filters'), 
+            '1.0.0', 
+            true 
+        );
+    }
+}
+add_action( 'wp_enqueue_scripts', 'railclick_enqueue_scripts' );
 
 function railclick_add_custom_meta_boxes() {
     add_meta_box(
