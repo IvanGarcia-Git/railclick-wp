@@ -79,17 +79,165 @@ function railclick_enqueue_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'railclick_enqueue_scripts' );
 
-function railclick_add_custom_meta_boxes() {
-    add_meta_box(
-        'railclick_hero_section_meta_box',
-        __( 'Hero Section Content', 'railclick-theme' ),
-        'railclick_render_hero_section_meta_box',
-        'page',
-        'normal',
-        'high'
-    );
+// SISTEMA INTELIGENTE DE METABOXES - Solo registrar metaboxes según el template actual
+function railclick_add_template_specific_meta_boxes() {
+    global $post;
+    
+    // Solo aplicar a páginas
+    if (!$post || $post->post_type !== 'page') {
+        return;
+    }
+    
+    // Obtener el template de la página actual
+    $template = get_post_meta($post->ID, '_wp_page_template', true);
+    
+    // Si no hay template definido, usar template por defecto (landing)
+    if (empty($template) || $template === 'default') {
+        $template = 'landing';
+    }
+    
+    // Debug
+    error_log("Template detectado para página {$post->ID}: {$template}");
+    
+    // Registrar metaboxes según el template
+    switch ($template) {
+        case 'template-rutas-tren.php':
+            railclick_register_rutas_metaboxes();
+            break;
+            
+        case 'template-tipos-tren.php':
+            railclick_register_tipos_metaboxes();
+            break;
+            
+        case 'template-estaciones.php':
+            railclick_register_estaciones_metaboxes();
+            break;
+            
+        case 'landing':
+        case 'template-landing.php':
+        default:
+            railclick_register_landing_metaboxes();
+            break;
+    }
 }
-add_action( 'add_meta_boxes', 'railclick_add_custom_meta_boxes' );
+add_action( 'add_meta_boxes', 'railclick_add_template_specific_meta_boxes' );
+
+// Función para registrar metaboxes del landing
+function railclick_register_landing_metaboxes() {
+    add_meta_box('railclick_hero_section_meta_box', __( 'Hero Section Content', 'railclick-theme' ), 'railclick_render_hero_section_meta_box', 'page', 'normal', 'high');
+    add_meta_box('railclick_popular_routes_meta_box', __( 'Popular Routes Section Content', 'railclick-theme' ), 'railclick_render_popular_routes_meta_box', 'page', 'normal', 'high');
+    add_meta_box('railclick_train_types_meta_box', __( 'Train Types Content', 'railclick-theme' ), 'railclick_render_train_types_meta_box', 'page', 'normal', 'high');
+    add_meta_box('railclick_gallery_meta_box', __( 'Gallery Content', 'railclick-theme' ), 'railclick_render_gallery_meta_box', 'page', 'normal', 'high');
+    add_meta_box('railclick_main_train_stations_meta_box', __( 'Main Train Stations Content', 'railclick-theme' ), 'railclick_render_main_train_stations_meta_box', 'page', 'normal', 'high');
+    add_meta_box('railclick_blog_meta_box', __( 'Blog Content', 'railclick-theme' ), 'railclick_render_blog_meta_box', 'page', 'normal', 'high');
+    add_meta_box('railclick_why_travel_with_us_meta_box', __( 'Why Travel With Us Content', 'railclick-theme' ), 'railclick_render_why_travel_with_us_meta_box', 'page', 'normal', 'high');
+    add_meta_box('railclick_reviews_meta_box', __( 'Reviews Content', 'railclick-theme' ), 'railclick_render_reviews_meta_box', 'page', 'normal', 'high');
+    add_meta_box('railclick_faq_meta_box', __( 'FAQ Content', 'railclick-theme' ), 'railclick_render_faq_meta_box', 'page', 'normal', 'high');
+    add_meta_box('railclick_newsletter_meta_box', __( 'Newsletter Content', 'railclick-theme' ), 'railclick_render_newsletter_meta_box', 'page', 'normal', 'high');
+    add_meta_box('railclick_footer_meta_box', __( 'Footer Content', 'railclick-theme' ), 'railclick_render_footer_meta_box', 'page', 'normal', 'high');
+}
+
+// Función para registrar metaboxes de rutas
+function railclick_register_rutas_metaboxes() {
+    add_meta_box('rutas_hero_meta_box', __( 'Rutas - Configuración Hero', 'railclick-theme' ), 'railclick_render_rutas_hero_meta_box', 'page', 'normal', 'high');
+    add_meta_box('rutas_filters_meta_box', __( 'Rutas - Filtros y Búsqueda', 'railclick-theme' ), 'railclick_render_rutas_filters_meta_box', 'page', 'normal', 'high');
+    
+    for ($i = 1; $i <= 6; $i++) {
+        add_meta_box("rutas_route_{$i}_meta_box", __( "Rutas - Ruta {$i}", 'railclick-theme' ), "railclick_render_rutas_route_{$i}_meta_box", 'page', 'normal', 'high');
+    }
+}
+
+// Función para registrar metaboxes de tipos
+function railclick_register_tipos_metaboxes() {
+    add_meta_box('tipos_hero_meta_box', __( 'Tipos - Configuración Hero', 'railclick-theme' ), 'railclick_render_tipos_hero_meta_box', 'page', 'normal', 'high');
+    add_meta_box('tipos_regional_meta_box', __( 'Tipos - Tren Regional', 'railclick-theme' ), 'railclick_render_tipos_regional_meta_box', 'page', 'normal', 'high');
+    add_meta_box('tipos_alta_velocidad_meta_box', __( 'Tipos - Tren de Alta Velocidad', 'railclick-theme' ), 'railclick_render_tipos_alta_velocidad_meta_box', 'page', 'normal', 'high');
+    add_meta_box('tipos_nocturno_meta_box', __( 'Tipos - Tren Nocturno', 'railclick-theme' ), 'railclick_render_tipos_nocturno_meta_box', 'page', 'normal', 'high');
+    add_meta_box('tipos_panoramico_meta_box', __( 'Tipos - Tren Panorámico', 'railclick-theme' ), 'railclick_render_tipos_panoramico_meta_box', 'page', 'normal', 'high');
+}
+
+// Función para registrar metaboxes de estaciones
+function railclick_register_estaciones_metaboxes() {
+    add_meta_box('estaciones_hero_meta_box', __( 'Estaciones - Configuración Hero', 'railclick-theme' ), 'railclick_render_estaciones_hero_meta_box', 'page', 'normal', 'high');
+    add_meta_box('estaciones_central_meta_box', __( 'Estaciones - Estación Central', 'railclick-theme' ), 'railclick_render_estaciones_central_meta_box', 'page', 'normal', 'high');
+    add_meta_box('estaciones_norte_meta_box', __( 'Estaciones - Estación Norte', 'railclick-theme' ), 'railclick_render_estaciones_norte_meta_box', 'page', 'normal', 'high');
+    add_meta_box('estaciones_sur_meta_box', __( 'Estaciones - Estación Sur', 'railclick-theme' ), 'railclick_render_estaciones_sur_meta_box', 'page', 'normal', 'high');
+    add_meta_box('estaciones_este_meta_box', __( 'Estaciones - Estación Este', 'railclick-theme' ), 'railclick_render_estaciones_este_meta_box', 'page', 'normal', 'high');
+    add_meta_box('estaciones_oeste_meta_box', __( 'Estaciones - Estación Oeste', 'railclick-theme' ), 'railclick_render_estaciones_oeste_meta_box', 'page', 'normal', 'high');
+}
+
+// Script para recargar página cuando cambie el template (para mostrar metaboxes correctos)
+function railclick_template_change_reload_script() {
+    global $pagenow;
+    
+    if ($pagenow == 'post.php' || $pagenow == 'post-new.php') {
+        if (get_post_type() == 'page' || (isset($_GET['post_type']) && $_GET['post_type'] == 'page')) {
+            ?>
+            <script type="text/javascript">
+            jQuery(document).ready(function($) {
+                var originalTemplate = $('#page_template').val();
+                
+                // Detectar cambio de template y recargar para mostrar metaboxes correctos
+                $('#page_template').change(function() {
+                    var newTemplate = $(this).val();
+                    
+                    if (newTemplate !== originalTemplate) {
+                        // Mostrar mensaje de información
+                        if ($('.railclick-template-change-notice').length === 0) {
+                            $(this).after('<p class="railclick-template-change-notice" style="color: #0073aa; font-weight: bold; margin-top: 10px;">📋 Los metaboxes se actualizarán al guardar la página para mostrar solo los relevantes para el template seleccionado.</p>');
+                        }
+                    } else {
+                        $('.railclick-template-change-notice').remove();
+                    }
+                });
+                
+                // Mostrar información del template actual
+                setTimeout(function() {
+                    var currentTemplate = $('#page_template').val();
+                    var templateInfo = '';
+                    var metaboxCount = 0;
+                    
+                    switch(currentTemplate) {
+                        case 'template-rutas-tren.php':
+                            templateInfo = 'Rutas de Tren (8 metaboxes)';
+                            metaboxCount = 8;
+                            break;
+                        case 'template-tipos-tren.php':
+                            templateInfo = 'Tipos de Tren (5 metaboxes)';
+                            metaboxCount = 5;
+                            break;
+                        case 'template-estaciones.php':
+                            templateInfo = 'Estaciones (6 metaboxes)';
+                            metaboxCount = 6;
+                            break;
+                        default:
+                            templateInfo = 'Landing Page (11 metaboxes)';
+                            metaboxCount = 11;
+                    }
+                    
+                    if ($('.railclick-current-template-info').length === 0) {
+                        $('#page_template').after('<p class="railclick-current-template-info" style="color: #2271b1; font-size: 13px; margin-top: 5px;">📋 Mostrando metaboxes para: ' + templateInfo + '</p>');
+                    }
+                }, 500);
+            });
+            </script>
+            <style>
+            .railclick-template-change-notice {
+                background: #fff3cd;
+                border: 1px solid #ffeaa7;
+                border-radius: 4px;
+                padding: 8px 12px;
+                margin: 10px 0;
+                color: #856404;
+            }
+            </style>
+            <?php
+        }
+    }
+}
+add_action('admin_footer', 'railclick_template_change_reload_script');
+
+// Función eliminada - reemplazada por railclick_template_change_reload_script
 
 function railclick_add_popular_routes_meta_box() {
     add_meta_box(
@@ -101,7 +249,7 @@ function railclick_add_popular_routes_meta_box() {
         'high'
     );
 }
-add_action( 'add_meta_boxes', 'railclick_add_popular_routes_meta_box' );
+// REMOVED: Now handled centrally in railclick_add_template_specific_meta_boxes
 
 function railclick_render_popular_routes_meta_box( $post ) {
     wp_nonce_field( basename( __FILE__ ), 'railclick_popular_routes_nonce' );
@@ -296,7 +444,7 @@ function railclick_add_train_types_meta_box() {
         'high'
     );
 }
-add_action( 'add_meta_boxes', 'railclick_add_train_types_meta_box' );
+// REMOVED: Now handled centrally in railclick_add_template_specific_meta_boxes
 
 function railclick_render_train_types_meta_box( $post ) {
     wp_nonce_field( basename( __FILE__ ), 'railclick_train_types_nonce' );
@@ -536,7 +684,7 @@ function railclick_add_gallery_meta_box() {
         'high'
     );
 }
-add_action( 'add_meta_boxes', 'railclick_add_gallery_meta_box' );
+// REMOVED: Now handled centrally in railclick_add_template_specific_meta_boxes
 
 function railclick_render_gallery_meta_box( $post ) {
     wp_nonce_field( basename( __FILE__ ), 'railclick_gallery_nonce' );
@@ -685,7 +833,7 @@ function railclick_add_main_train_stations_meta_box() {
         'high'
     );
 }
-add_action( 'add_meta_boxes', 'railclick_add_main_train_stations_meta_box' );
+// REMOVED: Now handled centrally in railclick_add_template_specific_meta_boxes
 
 function railclick_render_main_train_stations_meta_box( $post ) {
     wp_nonce_field( basename( __FILE__ ), 'railclick_main_train_stations_nonce' );
@@ -1038,7 +1186,7 @@ function railclick_add_blog_meta_box() {
         'high'
     );
 }
-add_action( 'add_meta_boxes', 'railclick_add_blog_meta_box' );
+// REMOVED: Now handled centrally in railclick_add_template_specific_meta_boxes
 
 function railclick_render_blog_meta_box( $post ) {
     wp_nonce_field( basename( __FILE__ ), 'railclick_blog_nonce' );
@@ -1238,7 +1386,7 @@ function railclick_add_why_travel_with_us_meta_box() {
         'high'
     );
 }
-add_action( 'add_meta_boxes', 'railclick_add_why_travel_with_us_meta_box' );
+// REMOVED: Now handled centrally in railclick_add_template_specific_meta_boxes
 
 function railclick_render_why_travel_with_us_meta_box( $post ) {
     wp_nonce_field( basename( __FILE__ ), 'railclick_why_travel_with_us_nonce' );
@@ -1388,7 +1536,7 @@ function railclick_add_reviews_meta_box() {
         'high'
     );
 }
-add_action( 'add_meta_boxes', 'railclick_add_reviews_meta_box' );
+// REMOVED: Now handled centrally in railclick_add_template_specific_meta_boxes
 
 function railclick_render_reviews_meta_box( $post ) {
     wp_nonce_field( basename( __FILE__ ), 'railclick_reviews_nonce' );
@@ -1534,7 +1682,7 @@ function railclick_add_faq_meta_box() {
         'high'
     );
 }
-add_action( 'add_meta_boxes', 'railclick_add_faq_meta_box' );
+// REMOVED: Now handled centrally in railclick_add_template_specific_meta_boxes
 
 function railclick_render_faq_meta_box( $post ) {
     wp_nonce_field( basename( __FILE__ ), 'railclick_faq_nonce' );
@@ -1706,7 +1854,7 @@ function railclick_add_newsletter_meta_box() {
         'high'
     );
 }
-add_action( 'add_meta_boxes', 'railclick_add_newsletter_meta_box' );
+// REMOVED: Now handled centrally in railclick_add_template_specific_meta_boxes
 
 function railclick_render_newsletter_meta_box( $post ) {
     wp_nonce_field( basename( __FILE__ ), 'railclick_newsletter_nonce' );
@@ -1779,7 +1927,7 @@ function railclick_add_footer_meta_box() {
         'high'
     );
 }
-add_action( 'add_meta_boxes', 'railclick_add_footer_meta_box' );
+// REMOVED: Now handled centrally in railclick_add_template_specific_meta_boxes
 
 function railclick_render_footer_meta_box( $post ) {
     wp_nonce_field( basename( __FILE__ ), 'railclick_footer_nonce' );
@@ -2203,7 +2351,7 @@ function railclick_add_rutas_hero_meta_box() {
         'high'
     );
 }
-add_action( 'add_meta_boxes', 'railclick_add_rutas_hero_meta_box' );
+// REMOVED: Now handled centrally in railclick_add_template_specific_meta_boxes
 
 function railclick_render_rutas_hero_meta_box( $post ) {
     wp_nonce_field( basename( __FILE__ ), 'railclick_rutas_hero_nonce' );
@@ -2283,7 +2431,7 @@ function railclick_add_rutas_filters_meta_box() {
         'high'
     );
 }
-add_action( 'add_meta_boxes', 'railclick_add_rutas_filters_meta_box' );
+// REMOVED: Now handled centrally in railclick_add_template_specific_meta_boxes
 
 function railclick_render_rutas_filters_meta_box( $post ) {
     wp_nonce_field( basename( __FILE__ ), 'railclick_rutas_filters_nonce' );
@@ -2357,7 +2505,7 @@ function railclick_add_rutas_routes_meta_boxes() {
         );
     }
 }
-add_action( 'add_meta_boxes', 'railclick_add_rutas_routes_meta_boxes' );
+// REMOVED: Now handled centrally in railclick_add_template_specific_meta_boxes
 
 function railclick_render_rutas_route_meta_box( $post, $args ) {
     $route_number = $args['args']['route_number'];
@@ -2780,7 +2928,7 @@ function railclick_add_tipos_meta_boxes() {
         'high'
     );
 }
-add_action( 'add_meta_boxes', 'railclick_add_tipos_meta_boxes' );
+// REMOVED: Now handled centrally in railclick_add_template_specific_meta_boxes
 
 // Renderizar metabox Hero para Tipos
 function railclick_render_tipos_hero_meta_box( $post ) {
@@ -3049,7 +3197,7 @@ function railclick_add_estaciones_meta_boxes() {
         'high'
     );
 }
-add_action( 'add_meta_boxes', 'railclick_add_estaciones_meta_boxes' );
+// REMOVED: Now handled centrally in railclick_add_template_specific_meta_boxes
 
 // Renderizar metabox Hero para Estaciones
 function railclick_render_estaciones_hero_meta_box( $post ) {
