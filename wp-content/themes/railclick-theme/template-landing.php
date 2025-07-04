@@ -31,26 +31,17 @@ get_header();
 
                 
                 <nav class="hidden lg:flex items-center space-x-6 xl:space-x-8">
-                  <a href="#inicio" class="text-white/80 hover:text-white transition-colors text-sm xl:text-base">
+                  <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="text-white/80 hover:text-white transition-colors text-sm xl:text-base">
                     Inicio
                   </a>
-                  <a href="#rutas" class="text-white/80 hover:text-white transition-colors text-sm xl:text-base">
+                  <a href="<?php echo esc_url( get_permalink( get_page_by_title( 'Rutas de Tren' ) ) ); ?>" class="text-white/80 hover:text-white transition-colors text-sm xl:text-base">
                     Rutas de Tren
                   </a>
-                  <a href="#tipos" class="text-white/80 hover:text-white transition-colors text-sm xl:text-base">
+                  <a href="<?php echo esc_url( get_permalink( get_page_by_title( 'Tipos de Tren' ) ) ); ?>" class="text-white/80 hover:text-white transition-colors text-sm xl:text-base">
                     Tipos de Tren
                   </a>
-                  <a href="#estaciones" class="text-white/80 hover:text-white transition-colors text-sm xl:text-base">
+                  <a href="<?php echo esc_url( get_permalink( get_page_by_title( 'Estaciones' ) ) ); ?>" class="text-white/80 hover:text-white transition-colors text-sm xl:text-base">
                     Estaciones
-                  </a>
-                  <a href="#billetes" class="text-white/80 hover:text-white transition-colors text-sm xl:text-base">
-                    Comprar Billetes
-                  </a>
-                  <a href="#blog" class="text-white/80 hover:text-white transition-colors text-sm xl:text-base">
-                    Blog
-                  </a>
-                  <a href="#faqs" class="text-white/80 hover:text-white transition-colors text-sm xl:text-base">
-                    FAQs
                   </a>
                 </nav>
 
@@ -71,11 +62,6 @@ get_header();
                       <option value="en" class="text-gray-900">EN</option>
                     </select>
                   </div>
-                  <a href="/login">
-                    <button class="text-white hover:bg-white/10 text-sm">
-                      Login
-                    </button>
-                  </a>
                   <button class="bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white text-sm px-4 py-2 flex items-center justify-center rounded-full">
                     Buscar Trenes
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 h-3 w-3"><path d="m9 18 6-6-6-6"/></svg>
@@ -275,7 +261,7 @@ get_header();
             </div>
 
             <div class="text-center">
-              <a href="#tipos">
+              <a href="<?php echo esc_url( home_url( '/rutas-de-tren/' ) ); ?>">
                 <button class="bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white px-8 py-3 rounded-full flex items-center justify-center mx-auto">
                   Ver Más Información
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 h-4 w-4"><path d="m9 18 6-6-6-6"/></svg>
@@ -374,10 +360,12 @@ get_header();
             </div>
 
             <div class="text-center mt-12">
-              <button class="bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white px-8 py-3 rounded-full flex items-center justify-center mx-auto">
-                Comparar Trenes
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 h-4 w-4"><path d="m9 18 6-6-6-6"/></svg>
-              </button>
+              <a href="<?php echo esc_url( home_url( '/tipos-de-tren/' ) ); ?>">
+                <button class="bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white px-8 py-3 rounded-full flex items-center justify-center mx-auto">
+                  Comparar Trenes
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 h-4 w-4"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+              </a>
             </div>
           </div>
         </div>
@@ -451,9 +439,9 @@ get_header();
               
               <div class="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
                 <div class="pointer-events-auto">
-                  <button class="bg-white text-gray-900 hover:bg-gray-100 px-8 py-4 rounded-full text-lg font-medium shadow-lg border border-gray-200 mt-16 mx-auto">
+                  <a href="<?php echo esc_url( home_url( get_post_meta( get_the_ID(), 'gallery_button_link', true ) ) ); ?>" class="bg-white text-gray-900 hover:bg-gray-100 px-8 py-4 rounded-full text-lg font-medium shadow-lg border border-gray-200 mt-16 mx-auto">
                     Explorar Galería
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>
@@ -622,10 +610,12 @@ get_header();
             </div>
 
             <div class="text-center">
-              <button class="bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white px-8 py-3 rounded-full flex items-center justify-center mx-auto">
-                Ver Todas las Estaciones
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 h-4 w-4"><path d="m9 18 6-6-6-6"/></svg>
-              </button>
+              <a href="<?php echo esc_url( home_url( '/estaciones/' ) ); ?>">
+                <button class="bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white px-8 py-3 rounded-full flex items-center justify-center mx-auto">
+                  Ver Todas las Estaciones
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 h-4 w-4"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+              </a>
             </div>
           </div>
         </div>

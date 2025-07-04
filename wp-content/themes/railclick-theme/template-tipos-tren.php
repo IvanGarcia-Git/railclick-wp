@@ -31,10 +31,10 @@ get_header();
 
                         <!-- Navigation -->
                         <nav class="hidden lg:flex items-center space-x-6 xl:space-x-8">
-                            <a href="#inicio" class="text-white/80 hover:text-white transition-colors text-sm xl:text-base">Inicio</a>
-                            <a href="#rutas" class="text-white/80 hover:text-white transition-colors text-sm xl:text-base">Rutas de Tren</a>
+                            <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="text-white/80 hover:text-white transition-colors text-sm xl:text-base">Inicio</a>
+                            <a href="<?php echo esc_url( get_permalink( get_page_by_title( 'Rutas de Tren' ) ) ); ?>" class="text-white/80 hover:text-white transition-colors text-sm xl:text-base">Rutas de Tren</a>
                             <a href="#tipos" class="text-white hover:text-white transition-colors text-sm xl:text-base font-semibold">Tipos de Tren</a>
-                            <a href="#estaciones" class="text-white/80 hover:text-white transition-colors text-sm xl:text-base">Estaciones</a>
+                            <a href="<?php echo esc_url( get_permalink( get_page_by_title( 'Estaciones' ) ) ); ?>" class="text-white/80 hover:text-white transition-colors text-sm xl:text-base">Estaciones</a>
                         </nav>
 
                         <!-- Mobile menu button -->
