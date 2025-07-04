@@ -35,6 +35,9 @@ get_header();
                             <a href="<?php echo esc_url( get_permalink( get_page_by_title( 'Rutas de Tren' ) ) ); ?>" class="text-white/80 hover:text-white transition-colors text-sm xl:text-base">Rutas de Tren</a>
                             <a href="<?php echo esc_url( get_permalink( get_page_by_title( 'Tipos de Tren' ) ) ); ?>" class="text-white/80 hover:text-white transition-colors text-sm xl:text-base">Tipos de Tren</a>
                             <a href="#estaciones" class="text-white hover:text-white transition-colors text-sm xl:text-base font-semibold">Estaciones</a>
+                            <a href="<?php echo esc_url( get_permalink( get_page_by_title( 'Contacto' ) ) ); ?>" class="text-white/80 hover:text-white transition-colors text-sm xl:text-base">
+                                Contacto
+                            </a>
                         </nav>
 
                         <!-- Mobile menu button -->

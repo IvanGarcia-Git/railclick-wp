@@ -43,6 +43,9 @@ get_header();
                   <a href="<?php echo esc_url( get_permalink( get_page_by_title( 'Estaciones' ) ) ); ?>" class="text-white/80 hover:text-white transition-colors text-sm xl:text-base">
                     Estaciones
                   </a>
+                  <a href="<?php echo esc_url( get_permalink( get_page_by_title( 'Contacto' ) ) ); ?>" class="text-white/80 hover:text-white transition-colors text-sm xl:text-base">
+                    Contacto
+                  </a>
                 </nav>
 
                 
