@@ -339,27 +339,130 @@ get_header();
         </div>
     </section>
 
-    <!-- Call to Action Section -->
-    <section class="bg-blue-600 py-16 animate-fade-in-up">
-        <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl lg:text-4xl font-bold text-white mb-6 animate-fade-in-down">
-                Todas las estaciones a tu alcance
-            </h2>
-            <p class="text-blue-100 text-lg mb-8 max-w-2xl mx-auto animate-fade-in-up">
-                Descubre toda la información necesaria para planificar tu viaje desde cualquier estación.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#mapa" 
-                   class="btn-primary bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors animate-slide-in-left">
-                    Ver Mapa Interactivo
-                </a>
-                <a href="#planificador" 
-                   class="btn-primary border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors animate-slide-in-right">
-                    Planifica tu Viaje
-                </a>
-            </div>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-8">
+          <div class="flex items-center justify-center space-x-2 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-blue-400"><path d="M10 9.5 14 5.5"/><path d="m14 14-4 4"/><path d="M10 18.5 14 14.5"/><path d="m14 9.5-4-4"/><path d="M5 12h14"/><path d="M5 12h14"/><path d="M8 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h2"/><path d="M18 3h-2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h2"/></svg>
+            <h2 class="text-2xl font-bold">ItalyTren</h2>
+          </div>
+          <p class="text-gray-400 max-w-2xl mx-auto">
+            Tu compañero de confianza para viajar en tren por Italia. Descubre la comodidad, velocidad y belleza 
+            de los ferrocarriles italianos con nosotros.
+          </p>
         </div>
-    </section>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <h4 class="font-semibold mb-4">Rutas Populares</h4>
+            <ul class="space-y-2 text-gray-400">
+              <li>
+                <a href="#" class="hover:text-white transition-colors">
+                  Roma - Nápoles
+                </a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors">
+                  Roma - Florencia
+                </a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors">
+                  Milán - Venecia
+                </a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors">
+                  Ver todas las rutas
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="font-semibold mb-4">Tipos de Tren</h4>
+            <ul class="space-y-2 text-gray-400">
+              <li>
+                <a href="#" class="hover:text-white transition-colors">
+                  Frecciarossa
+                </a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors">
+                  Italo
+                </a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors">
+                  Frecciargento
+                </a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors">
+                  Trenes Regionales
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="font-semibold mb-4">Soporte</h4>
+            <ul class="space-y-2 text-gray-400">
+              <li>
+                <a href="#" class="hover:text-white transition-colors">
+                  Contacto
+                </a>
+              </li>
+              <li>
+                <a href="#faqs" class="hover:text-white transition-colors">
+                  FAQs
+                </a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors">
+                  Guía de Viaje
+                </a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors">
+                  Ayuda con Reservas
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="font-semibold mb-4">Legal</h4>
+            <ul class="space-y-2 text-gray-400">
+              <li>
+                <a href="#" class="hover:text-white transition-colors">
+                  Aviso Legal
+                </a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors">
+                  Política de Privacidad
+                </a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors">
+                  Términos y Condiciones
+                </a>
+              </li>
+              <li class="flex items-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                <span>info@italytren.com</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+          <p>&copy; 2024 ItalyTren. Todos los derechos reservados.</p>
+        </div>
+      </div>
+    </footer>
 
 </div>
 
