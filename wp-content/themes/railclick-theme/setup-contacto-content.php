@@ -88,6 +88,13 @@ function setup_contacto_page_content() {
  * Register Contacto Page Metaboxes
  */
 function register_contacto_page_metaboxes() {
+    // Only show metaboxes for pages using the Contacto template
+    global $post;
+    if (!$post) return;
+    
+    $template = get_post_meta($post->ID, '_wp_page_template', true);
+    if ($template !== 'template-contacto.php') return;
+    
     add_meta_box(
         'contacto_hero_meta',
         'Contacto - Sección Hero',
@@ -149,7 +156,11 @@ function contacto_hero_meta_callback($post) {
     <table class="form-table">
         <tr>
             <th><label for="contacto_hero_bg_image">Imagen de Fondo del Hero</label></th>
-            <td><input type="url" id="contacto_hero_bg_image" name="contacto_hero_bg_image" value="<?php echo esc_url($hero_bg_image); ?>" class="regular-text" /></td>
+            <td>
+                <input type="url" id="contacto_hero_bg_image" name="contacto_hero_bg_image" value="<?php echo esc_url($hero_bg_image); ?>" class="regular-text" />
+                <input type="button" id="contacto_hero_bg_image_button" class="button" value="Seleccionar Imagen" />
+                <br><small>Introduce una URL o selecciona una imagen de la biblioteca de medios.</small>
+            </td>
         </tr>
         <tr>
             <th><label for="contacto_hero_subtitle">Subtítulo del Hero</label></th>
@@ -280,7 +291,7 @@ function contacto_cta_meta_callback($post) {
         </tr>
         <tr>
             <th><label for="contacto_cta_button_1_link">Enlace Botón 1</label></th>
-            <td><input type="url" id="contacto_cta_button_1_link" name="contacto_cta_button_1_link" value="<?php echo esc_url($cta_button_1_link); ?>" class="regular-text" /></td>
+            <td><input type="text" id="contacto_cta_button_1_link" name="contacto_cta_button_1_link" value="<?php echo esc_attr($cta_button_1_link); ?>" class="regular-text" /></td>
         </tr>
         <tr>
             <th><label for="contacto_cta_button_2_text">Texto Botón 2</label></th>
@@ -288,7 +299,7 @@ function contacto_cta_meta_callback($post) {
         </tr>
         <tr>
             <th><label for="contacto_cta_button_2_link">Enlace Botón 2</label></th>
-            <td><input type="url" id="contacto_cta_button_2_link" name="contacto_cta_button_2_link" value="<?php echo esc_url($cta_button_2_link); ?>" class="regular-text" /></td>
+            <td><input type="text" id="contacto_cta_button_2_link" name="contacto_cta_button_2_link" value="<?php echo esc_attr($cta_button_2_link); ?>" class="regular-text" /></td>
         </tr>
     </table>
     <?php
@@ -346,6 +357,17 @@ function save_contacto_page_meta($post_id) {
 // Hook into WordPress
 add_action('add_meta_boxes', 'register_contacto_page_metaboxes');
 add_action('save_post', 'save_contacto_page_meta');
+
+// Enqueue media uploader script for Contact page
+function contacto_enqueue_media_uploader() {
+    global $post;
+    
+    if ($post && get_post_meta($post->ID, '_wp_page_template', true) === 'template-contacto.php') {
+        wp_enqueue_media();
+        wp_enqueue_script('contacto-media-uploader', get_template_directory_uri() . '/assets/js/contacto-media-uploader.js', array('jquery'), '1.0.0', true);
+    }
+}
+add_action('admin_enqueue_scripts', 'contacto_enqueue_media_uploader');
 
 // Run setup if this file is accessed directly
 if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {

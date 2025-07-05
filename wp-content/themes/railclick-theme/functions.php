@@ -113,6 +113,10 @@ function railclick_add_template_specific_meta_boxes() {
             railclick_register_estaciones_metaboxes();
             break;
             
+        case 'template-contacto.php':
+            register_contacto_page_metaboxes();
+            break;
+            
         case 'landing':
         case 'template-landing.php':
         default:
@@ -209,6 +213,10 @@ function railclick_template_change_reload_script() {
                         case 'template-estaciones.php':
                             templateInfo = 'Estaciones (6 metaboxes)';
                             metaboxCount = 6;
+                            break;
+                        case 'template-contacto.php':
+                            templateInfo = 'Contacto (5 metaboxes)';
+                            metaboxCount = 5;
                             break;
                         default:
                             templateInfo = 'Landing Page (11 metaboxes)';
@@ -3105,6 +3113,7 @@ add_action( 'save_post', 'railclick_save_tipos_meta_boxes' );
 // Incluir archivo de setup para tipos de tren
 require_once get_template_directory() . '/setup-tipos-content.php';
 require_once get_template_directory() . '/setup-estaciones-content.php';
+require_once get_template_directory() . '/setup-contacto-content.php';
 
 // Auto-importar contenido de tipos de tren al activar el tema
 function railclick_auto_setup_tipos_content() {
