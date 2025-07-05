@@ -12,6 +12,26 @@ function railclick_enqueue_styles() {
             '1.0.0' 
         );
     }
+    
+    // Enqueue additional styles for Tipos de Tren template
+    if (is_page_template('template-tipos-tren.php')) {
+        wp_enqueue_style( 
+            'tipos-animations-css', 
+            get_template_directory_uri() . '/assets/css/rutas-animations.css', 
+            array('main-css'), 
+            '1.0.0' 
+        );
+    }
+    
+    // Enqueue additional styles for Estaciones template
+    if (is_page_template('template-estaciones.php')) {
+        wp_enqueue_style( 
+            'estaciones-animations-css', 
+            get_template_directory_uri() . '/assets/css/rutas-animations.css', 
+            array('main-css'), 
+            '1.0.0' 
+        );
+    }
 }
 add_action( 'wp_enqueue_scripts', 'railclick_enqueue_styles' );
 
@@ -34,20 +54,198 @@ function railclick_enqueue_scripts() {
             true 
         );
     }
+    
+    // Enqueue scripts for Tipos de Tren template
+    if (is_page_template('template-tipos-tren.php')) {
+        wp_enqueue_script( 
+            'tipos-animations', 
+            get_template_directory_uri() . '/assets/js/rutas-animations.js', 
+            array(), 
+            '1.0.0', 
+            true 
+        );
+    }
+    
+    // Enqueue scripts for Estaciones template
+    if (is_page_template('template-estaciones.php')) {
+        wp_enqueue_script( 
+            'estaciones-animations', 
+            get_template_directory_uri() . '/assets/js/rutas-animations.js', 
+            array(), 
+            '1.0.0', 
+            true 
+        );
+    }
 }
 add_action( 'wp_enqueue_scripts', 'railclick_enqueue_scripts' );
 
-function railclick_add_custom_meta_boxes() {
-    add_meta_box(
-        'railclick_hero_section_meta_box',
-        __( 'Hero Section Content', 'railclick-theme' ),
-        'railclick_render_hero_section_meta_box',
-        'page',
-        'normal',
-        'high'
-    );
+// SISTEMA INTELIGENTE DE METABOXES - Solo registrar metaboxes según el template actual
+function railclick_add_template_specific_meta_boxes() {
+    global $post;
+    
+    // Solo aplicar a páginas
+    if (!$post || $post->post_type !== 'page') {
+        return;
+    }
+    
+    // Obtener el template de la página actual
+    $template = get_post_meta($post->ID, '_wp_page_template', true);
+    
+    // Si no hay template definido, usar template por defecto (landing)
+    if (empty($template) || $template === 'default') {
+        $template = 'landing';
+    }
+    
+    // Debug
+    error_log("Template detectado para página {$post->ID}: {$template}");
+    
+    // Registrar metaboxes según el template
+    switch ($template) {
+        case 'template-rutas-tren.php':
+            railclick_register_rutas_metaboxes();
+            break;
+            
+        case 'template-tipos-tren.php':
+            railclick_register_tipos_metaboxes();
+            break;
+            
+        case 'template-estaciones.php':
+            railclick_register_estaciones_metaboxes();
+            break;
+            
+        case 'template-contacto.php':
+            register_contacto_page_metaboxes();
+            break;
+            
+        case 'landing':
+        case 'template-landing.php':
+        default:
+            railclick_register_landing_metaboxes();
+            break;
+    }
 }
-add_action( 'add_meta_boxes', 'railclick_add_custom_meta_boxes' );
+add_action( 'add_meta_boxes', 'railclick_add_template_specific_meta_boxes' );
+
+// Función para registrar metaboxes del landing
+function railclick_register_landing_metaboxes() {
+    add_meta_box('railclick_hero_section_meta_box', __( 'Hero Section Content', 'railclick-theme' ), 'railclick_render_hero_section_meta_box', 'page', 'normal', 'high');
+    add_meta_box('railclick_popular_routes_meta_box', __( 'Popular Routes Section Content', 'railclick-theme' ), 'railclick_render_popular_routes_meta_box', 'page', 'normal', 'high');
+    add_meta_box('railclick_train_types_meta_box', __( 'Train Types Content', 'railclick-theme' ), 'railclick_render_train_types_meta_box', 'page', 'normal', 'high');
+    add_meta_box('railclick_gallery_meta_box', __( 'Gallery Content', 'railclick-theme' ), 'railclick_render_gallery_meta_box', 'page', 'normal', 'high');
+    add_meta_box('railclick_main_train_stations_meta_box', __( 'Main Train Stations Content', 'railclick-theme' ), 'railclick_render_main_train_stations_meta_box', 'page', 'normal', 'high');
+    add_meta_box('railclick_blog_meta_box', __( 'Blog Content', 'railclick-theme' ), 'railclick_render_blog_meta_box', 'page', 'normal', 'high');
+    add_meta_box('railclick_why_travel_with_us_meta_box', __( 'Why Travel With Us Content', 'railclick-theme' ), 'railclick_render_why_travel_with_us_meta_box', 'page', 'normal', 'high');
+    add_meta_box('railclick_reviews_meta_box', __( 'Reviews Content', 'railclick-theme' ), 'railclick_render_reviews_meta_box', 'page', 'normal', 'high');
+    add_meta_box('railclick_faq_meta_box', __( 'FAQ Content', 'railclick-theme' ), 'railclick_render_faq_meta_box', 'page', 'normal', 'high');
+    add_meta_box('railclick_newsletter_meta_box', __( 'Newsletter Content', 'railclick-theme' ), 'railclick_render_newsletter_meta_box', 'page', 'normal', 'high');
+    add_meta_box('railclick_footer_meta_box', __( 'Footer Content', 'railclick-theme' ), 'railclick_render_footer_meta_box', 'page', 'normal', 'high');
+}
+
+// Función para registrar metaboxes de rutas
+function railclick_register_rutas_metaboxes() {
+    add_meta_box('rutas_hero_meta_box', __( 'Rutas - Configuración Hero', 'railclick-theme' ), 'railclick_render_rutas_hero_meta_box', 'page', 'normal', 'high');
+    add_meta_box('rutas_filters_meta_box', __( 'Rutas - Filtros y Búsqueda', 'railclick-theme' ), 'railclick_render_rutas_filters_meta_box', 'page', 'normal', 'high');
+    
+    for ($i = 1; $i <= 6; $i++) {
+        add_meta_box("rutas_route_{$i}_meta_box", __( "Rutas - Ruta {$i}", 'railclick-theme' ), "railclick_render_rutas_route_{$i}_meta_box", 'page', 'normal', 'high');
+    }
+}
+
+// Función para registrar metaboxes de tipos
+function railclick_register_tipos_metaboxes() {
+    add_meta_box('tipos_hero_meta_box', __( 'Tipos - Configuración Hero', 'railclick-theme' ), 'railclick_render_tipos_hero_meta_box', 'page', 'normal', 'high');
+    add_meta_box('tipos_regional_meta_box', __( 'Tipos - Tren Regional', 'railclick-theme' ), 'railclick_render_tipos_regional_meta_box', 'page', 'normal', 'high');
+    add_meta_box('tipos_alta_velocidad_meta_box', __( 'Tipos - Tren de Alta Velocidad', 'railclick-theme' ), 'railclick_render_tipos_alta_velocidad_meta_box', 'page', 'normal', 'high');
+    add_meta_box('tipos_nocturno_meta_box', __( 'Tipos - Tren Nocturno', 'railclick-theme' ), 'railclick_render_tipos_nocturno_meta_box', 'page', 'normal', 'high');
+    add_meta_box('tipos_panoramico_meta_box', __( 'Tipos - Tren Panorámico', 'railclick-theme' ), 'railclick_render_tipos_panoramico_meta_box', 'page', 'normal', 'high');
+}
+
+// Función para registrar metaboxes de estaciones
+function railclick_register_estaciones_metaboxes() {
+    add_meta_box('estaciones_hero_meta_box', __( 'Estaciones - Configuración Hero', 'railclick-theme' ), 'railclick_render_estaciones_hero_meta_box', 'page', 'normal', 'high');
+    add_meta_box('estaciones_central_meta_box', __( 'Estaciones - Estación Central', 'railclick-theme' ), 'railclick_render_estaciones_central_meta_box', 'page', 'normal', 'high');
+    add_meta_box('estaciones_norte_meta_box', __( 'Estaciones - Estación Norte', 'railclick-theme' ), 'railclick_render_estaciones_norte_meta_box', 'page', 'normal', 'high');
+    add_meta_box('estaciones_sur_meta_box', __( 'Estaciones - Estación Sur', 'railclick-theme' ), 'railclick_render_estaciones_sur_meta_box', 'page', 'normal', 'high');
+    add_meta_box('estaciones_este_meta_box', __( 'Estaciones - Estación Este', 'railclick-theme' ), 'railclick_render_estaciones_este_meta_box', 'page', 'normal', 'high');
+    add_meta_box('estaciones_oeste_meta_box', __( 'Estaciones - Estación Oeste', 'railclick-theme' ), 'railclick_render_estaciones_oeste_meta_box', 'page', 'normal', 'high');
+}
+
+// Script para recargar página cuando cambie el template (para mostrar metaboxes correctos)
+function railclick_template_change_reload_script() {
+    global $pagenow;
+    
+    if ($pagenow == 'post.php' || $pagenow == 'post-new.php') {
+        if (get_post_type() == 'page' || (isset($_GET['post_type']) && $_GET['post_type'] == 'page')) {
+            ?>
+            <script type="text/javascript">
+            jQuery(document).ready(function($) {
+                var originalTemplate = $('#page_template').val();
+                
+                // Detectar cambio de template y recargar para mostrar metaboxes correctos
+                $('#page_template').change(function() {
+                    var newTemplate = $(this).val();
+                    
+                    if (newTemplate !== originalTemplate) {
+                        // Mostrar mensaje de información
+                        if ($('.railclick-template-change-notice').length === 0) {
+                            $(this).after('<p class="railclick-template-change-notice" style="color: #0073aa; font-weight: bold; margin-top: 10px;">📋 Los metaboxes se actualizarán al guardar la página para mostrar solo los relevantes para el template seleccionado.</p>');
+                        }
+                    } else {
+                        $('.railclick-template-change-notice').remove();
+                    }
+                });
+                
+                // Mostrar información del template actual
+                setTimeout(function() {
+                    var currentTemplate = $('#page_template').val();
+                    var templateInfo = '';
+                    var metaboxCount = 0;
+                    
+                    switch(currentTemplate) {
+                        case 'template-rutas-tren.php':
+                            templateInfo = 'Rutas de Tren (8 metaboxes)';
+                            metaboxCount = 8;
+                            break;
+                        case 'template-tipos-tren.php':
+                            templateInfo = 'Tipos de Tren (5 metaboxes)';
+                            metaboxCount = 5;
+                            break;
+                        case 'template-estaciones.php':
+                            templateInfo = 'Estaciones (6 metaboxes)';
+                            metaboxCount = 6;
+                            break;
+                        case 'template-contacto.php':
+                            templateInfo = 'Contacto (5 metaboxes)';
+                            metaboxCount = 5;
+                            break;
+                        default:
+                            templateInfo = 'Landing Page (11 metaboxes)';
+                            metaboxCount = 11;
+                    }
+                    
+                    if ($('.railclick-current-template-info').length === 0) {
+                        $('#page_template').after('<p class="railclick-current-template-info" style="color: #2271b1; font-size: 13px; margin-top: 5px;">📋 Mostrando metaboxes para: ' + templateInfo + '</p>');
+                    }
+                }, 500);
+            });
+            </script>
+            <style>
+            .railclick-template-change-notice {
+                background: #fff3cd;
+                border: 1px solid #ffeaa7;
+                border-radius: 4px;
+                padding: 8px 12px;
+                margin: 10px 0;
+                color: #856404;
+            }
+            </style>
+            <?php
+        }
+    }
+}
+add_action('admin_footer', 'railclick_template_change_reload_script');
+
+// Función eliminada - reemplazada por railclick_template_change_reload_script
 
 function railclick_add_popular_routes_meta_box() {
     add_meta_box(
@@ -59,7 +257,7 @@ function railclick_add_popular_routes_meta_box() {
         'high'
     );
 }
-add_action( 'add_meta_boxes', 'railclick_add_popular_routes_meta_box' );
+// REMOVED: Now handled centrally in railclick_add_template_specific_meta_boxes
 
 function railclick_render_popular_routes_meta_box( $post ) {
     wp_nonce_field( basename( __FILE__ ), 'railclick_popular_routes_nonce' );
@@ -254,7 +452,7 @@ function railclick_add_train_types_meta_box() {
         'high'
     );
 }
-add_action( 'add_meta_boxes', 'railclick_add_train_types_meta_box' );
+// REMOVED: Now handled centrally in railclick_add_template_specific_meta_boxes
 
 function railclick_render_train_types_meta_box( $post ) {
     wp_nonce_field( basename( __FILE__ ), 'railclick_train_types_nonce' );
@@ -494,7 +692,7 @@ function railclick_add_gallery_meta_box() {
         'high'
     );
 }
-add_action( 'add_meta_boxes', 'railclick_add_gallery_meta_box' );
+// REMOVED: Now handled centrally in railclick_add_template_specific_meta_boxes
 
 function railclick_render_gallery_meta_box( $post ) {
     wp_nonce_field( basename( __FILE__ ), 'railclick_gallery_nonce' );
@@ -643,7 +841,7 @@ function railclick_add_main_train_stations_meta_box() {
         'high'
     );
 }
-add_action( 'add_meta_boxes', 'railclick_add_main_train_stations_meta_box' );
+// REMOVED: Now handled centrally in railclick_add_template_specific_meta_boxes
 
 function railclick_render_main_train_stations_meta_box( $post ) {
     wp_nonce_field( basename( __FILE__ ), 'railclick_main_train_stations_nonce' );
@@ -996,7 +1194,7 @@ function railclick_add_blog_meta_box() {
         'high'
     );
 }
-add_action( 'add_meta_boxes', 'railclick_add_blog_meta_box' );
+// REMOVED: Now handled centrally in railclick_add_template_specific_meta_boxes
 
 function railclick_render_blog_meta_box( $post ) {
     wp_nonce_field( basename( __FILE__ ), 'railclick_blog_nonce' );
@@ -1196,7 +1394,7 @@ function railclick_add_why_travel_with_us_meta_box() {
         'high'
     );
 }
-add_action( 'add_meta_boxes', 'railclick_add_why_travel_with_us_meta_box' );
+// REMOVED: Now handled centrally in railclick_add_template_specific_meta_boxes
 
 function railclick_render_why_travel_with_us_meta_box( $post ) {
     wp_nonce_field( basename( __FILE__ ), 'railclick_why_travel_with_us_nonce' );
@@ -1346,7 +1544,7 @@ function railclick_add_reviews_meta_box() {
         'high'
     );
 }
-add_action( 'add_meta_boxes', 'railclick_add_reviews_meta_box' );
+// REMOVED: Now handled centrally in railclick_add_template_specific_meta_boxes
 
 function railclick_render_reviews_meta_box( $post ) {
     wp_nonce_field( basename( __FILE__ ), 'railclick_reviews_nonce' );
@@ -1492,7 +1690,7 @@ function railclick_add_faq_meta_box() {
         'high'
     );
 }
-add_action( 'add_meta_boxes', 'railclick_add_faq_meta_box' );
+// REMOVED: Now handled centrally in railclick_add_template_specific_meta_boxes
 
 function railclick_render_faq_meta_box( $post ) {
     wp_nonce_field( basename( __FILE__ ), 'railclick_faq_nonce' );
@@ -1664,7 +1862,7 @@ function railclick_add_newsletter_meta_box() {
         'high'
     );
 }
-add_action( 'add_meta_boxes', 'railclick_add_newsletter_meta_box' );
+// REMOVED: Now handled centrally in railclick_add_template_specific_meta_boxes
 
 function railclick_render_newsletter_meta_box( $post ) {
     wp_nonce_field( basename( __FILE__ ), 'railclick_newsletter_nonce' );
@@ -1737,7 +1935,7 @@ function railclick_add_footer_meta_box() {
         'high'
     );
 }
-add_action( 'add_meta_boxes', 'railclick_add_footer_meta_box' );
+// REMOVED: Now handled centrally in railclick_add_template_specific_meta_boxes
 
 function railclick_render_footer_meta_box( $post ) {
     wp_nonce_field( basename( __FILE__ ), 'railclick_footer_nonce' );
@@ -2161,7 +2359,7 @@ function railclick_add_rutas_hero_meta_box() {
         'high'
     );
 }
-add_action( 'add_meta_boxes', 'railclick_add_rutas_hero_meta_box' );
+// REMOVED: Now handled centrally in railclick_add_template_specific_meta_boxes
 
 function railclick_render_rutas_hero_meta_box( $post ) {
     wp_nonce_field( basename( __FILE__ ), 'railclick_rutas_hero_nonce' );
@@ -2241,7 +2439,7 @@ function railclick_add_rutas_filters_meta_box() {
         'high'
     );
 }
-add_action( 'add_meta_boxes', 'railclick_add_rutas_filters_meta_box' );
+// REMOVED: Now handled centrally in railclick_add_template_specific_meta_boxes
 
 function railclick_render_rutas_filters_meta_box( $post ) {
     wp_nonce_field( basename( __FILE__ ), 'railclick_rutas_filters_nonce' );
@@ -2315,7 +2513,7 @@ function railclick_add_rutas_routes_meta_boxes() {
         );
     }
 }
-add_action( 'add_meta_boxes', 'railclick_add_rutas_routes_meta_boxes' );
+// REMOVED: Now handled centrally in railclick_add_template_specific_meta_boxes
 
 function railclick_render_rutas_route_meta_box( $post, $args ) {
     $route_number = $args['args']['route_number'];
@@ -2688,4 +2886,510 @@ function railclick_create_rutas_example_content() {
     
     return false;
 }
+
+// === METABOXES PARA TEMPLATE TIPOS DE TREN ===
+
+// Registrar metaboxes para Tipos de Tren
+function railclick_add_tipos_meta_boxes() {
+    add_meta_box(
+        'tipos_hero_meta_box',
+        __( 'Tipos - Configuración Hero', 'railclick-theme' ),
+        'railclick_render_tipos_hero_meta_box',
+        'page',
+        'normal',
+        'high'
+    );
+    
+    add_meta_box(
+        'tipos_regional_meta_box',
+        __( 'Tipos - Tren Regional', 'railclick-theme' ),
+        'railclick_render_tipos_regional_meta_box',
+        'page',
+        'normal',
+        'high'
+    );
+    
+    add_meta_box(
+        'tipos_alta_velocidad_meta_box',
+        __( 'Tipos - Tren de Alta Velocidad', 'railclick-theme' ),
+        'railclick_render_tipos_alta_velocidad_meta_box',
+        'page',
+        'normal',
+        'high'
+    );
+    
+    add_meta_box(
+        'tipos_nocturno_meta_box',
+        __( 'Tipos - Tren Nocturno', 'railclick-theme' ),
+        'railclick_render_tipos_nocturno_meta_box',
+        'page',
+        'normal',
+        'high'
+    );
+    
+    add_meta_box(
+        'tipos_panoramico_meta_box',
+        __( 'Tipos - Tren Panorámico', 'railclick-theme' ),
+        'railclick_render_tipos_panoramico_meta_box',
+        'page',
+        'normal',
+        'high'
+    );
+}
+// REMOVED: Now handled centrally in railclick_add_template_specific_meta_boxes
+
+// Renderizar metabox Hero para Tipos
+function railclick_render_tipos_hero_meta_box( $post ) {
+    wp_nonce_field( basename( __FILE__ ), 'tipos_hero_nonce' );
+
+    $hero_subtitle = get_post_meta( $post->ID, 'tipos_hero_subtitle', true );
+    $hero_title = get_post_meta( $post->ID, 'tipos_hero_title', true );
+    $hero_description = get_post_meta( $post->ID, 'tipos_hero_description', true );
+    $hero_bg_image = get_post_meta( $post->ID, 'tipos_hero_bg_image', true );
+
+    ?>
+    <table class="form-table">
+        <tr>
+            <th><label for="tipos_hero_subtitle">Subtítulo Hero</label></th>
+            <td><input type="text" name="tipos_hero_subtitle" id="tipos_hero_subtitle" value="<?php echo esc_attr( $hero_subtitle ); ?>" class="large-text" /></td>
+        </tr>
+        <tr>
+            <th><label for="tipos_hero_title">Título Principal</label></th>
+            <td><input type="text" name="tipos_hero_title" id="tipos_hero_title" value="<?php echo esc_attr( $hero_title ); ?>" class="large-text" /></td>
+        </tr>
+        <tr>
+            <th><label for="tipos_hero_description">Descripción</label></th>
+            <td><textarea name="tipos_hero_description" id="tipos_hero_description" class="large-text" rows="3"><?php echo esc_textarea( $hero_description ); ?></textarea></td>
+        </tr>
+        <tr>
+            <th><label for="tipos_hero_bg_image">Imagen de Fondo</label></th>
+            <td>
+                <input type="text" name="tipos_hero_bg_image" id="tipos_hero_bg_image" value="<?php echo esc_attr( $hero_bg_image ); ?>" class="large-text" />
+                <button type="button" class="button" id="tipos_hero_bg_image_button">Seleccionar Imagen</button>
+            </td>
+        </tr>
+    </table>
+    
+    <script>
+    jQuery(document).ready(function($) {
+        $('#tipos_hero_bg_image_button').click(function(e) {
+            e.preventDefault();
+            var image = wp.media({
+                title: 'Seleccionar Imagen',
+                multiple: false
+            }).open().on('select', function() {
+                var uploaded_image = image.state().get('selection').first();
+                var image_url = uploaded_image.toJSON().url;
+                $('#tipos_hero_bg_image').val(image_url);
+            });
+        });
+    });
+    </script>
+    <?php
+}
+
+// Función genérica para renderizar metaboxes de tipos de tren
+function railclick_render_tipo_meta_box( $post, $tipo_prefix, $tipo_name ) {
+    wp_nonce_field( basename( __FILE__ ), $tipo_prefix . '_nonce' );
+
+    $fields = [
+        'name' => 'Nombre del Tipo',
+        'description' => 'Descripción',
+        'capacity' => 'Capacidad (pasajeros)',
+        'speed' => 'Velocidad Máxima',
+        'services' => 'Servicios Incluidos (uno por línea)',
+        'features' => 'Características (una por línea)',
+        'price_from' => 'Precio desde (€)',
+        'image_1' => 'Imagen Principal',
+        'image_2' => 'Imagen Secundaria',
+        'image_3' => 'Imagen Adicional'
+    ];
+
+    ?>
+    <table class="form-table">
+        <?php foreach ($fields as $field_key => $field_label): ?>
+            <?php
+            $field_name = $tipo_prefix . '_' . $field_key;
+            $field_value = get_post_meta( $post->ID, $field_name, true );
+            ?>
+            <tr>
+                <th><label for="<?php echo esc_attr($field_name); ?>"><?php echo esc_html($field_label); ?></label></th>
+                <td>
+                    <?php if (in_array($field_key, ['description', 'services', 'features'])): ?>
+                        <textarea name="<?php echo esc_attr($field_name); ?>" id="<?php echo esc_attr($field_name); ?>" class="large-text" rows="4"><?php echo esc_textarea( $field_value ); ?></textarea>
+                    <?php elseif (strpos($field_key, 'image') !== false): ?>
+                        <input type="text" name="<?php echo esc_attr($field_name); ?>" id="<?php echo esc_attr($field_name); ?>" value="<?php echo esc_attr( $field_value ); ?>" class="large-text" />
+                        <button type="button" class="button image-upload-button" data-target="<?php echo esc_attr($field_name); ?>">Seleccionar Imagen</button>
+                    <?php else: ?>
+                        <input type="text" name="<?php echo esc_attr($field_name); ?>" id="<?php echo esc_attr($field_name); ?>" value="<?php echo esc_attr( $field_value ); ?>" class="large-text" />
+                    <?php endif; ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+    
+    <script>
+    jQuery(document).ready(function($) {
+        $('.image-upload-button').click(function(e) {
+            e.preventDefault();
+            var button = $(this);
+            var target = button.data('target');
+            var image = wp.media({
+                title: 'Seleccionar Imagen',
+                multiple: false
+            }).open().on('select', function() {
+                var uploaded_image = image.state().get('selection').first();
+                var image_url = uploaded_image.toJSON().url;
+                $('#' + target).val(image_url);
+            });
+        });
+    });
+    </script>
+    <?php
+}
+
+// Renderizar metaboxes específicos para cada tipo
+function railclick_render_tipos_regional_meta_box( $post ) {
+    railclick_render_tipo_meta_box( $post, 'tipo_regional', 'Tren Regional' );
+}
+
+function railclick_render_tipos_alta_velocidad_meta_box( $post ) {
+    railclick_render_tipo_meta_box( $post, 'tipo_alta_velocidad', 'Tren de Alta Velocidad' );
+}
+
+function railclick_render_tipos_nocturno_meta_box( $post ) {
+    railclick_render_tipo_meta_box( $post, 'tipo_nocturno', 'Tren Nocturno' );
+}
+
+function railclick_render_tipos_panoramico_meta_box( $post ) {
+    railclick_render_tipo_meta_box( $post, 'tipo_panoramico', 'Tren Panorámico' );
+}
+
+// Guardar datos de metaboxes de tipos
+function railclick_save_tipos_meta_boxes( $post_id ) {
+    // Verificar nonce y permisos
+    if ( ! current_user_can( 'edit_post', $post_id ) ) {
+        return;
+    }
+
+    // Lista de todos los campos a guardar
+    $hero_fields = [
+        'tipos_hero_subtitle',
+        'tipos_hero_title', 
+        'tipos_hero_description',
+        'tipos_hero_bg_image'
+    ];
+
+    $tipo_fields = [
+        'name', 'description', 'capacity', 'speed', 'services', 
+        'features', 'price_from', 'image_1', 'image_2', 'image_3'
+    ];
+
+    $tipos = ['regional', 'alta_velocidad', 'nocturno', 'panoramico'];
+
+    // Guardar campos hero
+    foreach ($hero_fields as $field) {
+        if ( isset( $_POST[$field] ) ) {
+            update_post_meta( $post_id, $field, sanitize_text_field( $_POST[$field] ) );
+        }
+    }
+
+    // Guardar campos de tipos
+    foreach ($tipos as $tipo) {
+        foreach ($tipo_fields as $field) {
+            $field_name = 'tipo_' . $tipo . '_' . $field;
+            if ( isset( $_POST[$field_name] ) ) {
+                if (in_array($field, ['description', 'services', 'features'])) {
+                    update_post_meta( $post_id, $field_name, sanitize_textarea_field( $_POST[$field_name] ) );
+                } else {
+                    update_post_meta( $post_id, $field_name, sanitize_text_field( $_POST[$field_name] ) );
+                }
+            }
+        }
+    }
+}
+add_action( 'save_post', 'railclick_save_tipos_meta_boxes' );
+
+// Incluir archivo de setup para tipos de tren
+require_once get_template_directory() . '/setup-tipos-content.php';
+require_once get_template_directory() . '/setup-estaciones-content.php';
+require_once get_template_directory() . '/setup-contacto-content.php';
+
+// Auto-importar contenido de tipos de tren al activar el tema
+function railclick_auto_setup_tipos_content() {
+    // Verificar si ya se ejecutó esta función
+    if (get_option('railclick_tipos_content_imported')) {
+        return;
+    }
+    
+    // Ejecutar setup automático
+    $page_id = railclick_setup_tipos_content();
+    
+    if ($page_id) {
+        // Marcar como importado
+        update_option('railclick_tipos_content_imported', true);
+        
+        // Log para debugging (opcional)
+        error_log('RailClick: Contenido de tipos de tren importado automáticamente. Página ID: ' . $page_id);
+    }
+}
+
+// Ejecutar auto-import al cargar el tema
+add_action('after_setup_theme', 'railclick_auto_setup_tipos_content');
+
+// También ejecutar en admin_init para asegurar la importación
+add_action('admin_init', 'railclick_auto_setup_tipos_content');
+
+// Reset para desarrollo (remover en producción)
+function railclick_reset_tipos_import() {
+    if (isset($_GET['reset_tipos_import']) && current_user_can('manage_options')) {
+        delete_option('railclick_tipos_content_imported');
+        wp_redirect(admin_url());
+        exit;
+    }
+}
+add_action('admin_init', 'railclick_reset_tipos_import');
+
+// ESTACIONES META BOXES
+function railclick_add_estaciones_meta_boxes() {
+    add_meta_box(
+        'estaciones_hero_meta_box',
+        __( 'Estaciones - Configuración Hero', 'railclick-theme' ),
+        'railclick_render_estaciones_hero_meta_box',
+        'page',
+        'normal',
+        'high'
+    );
+    
+    add_meta_box(
+        'estaciones_central_meta_box',
+        __( 'Estaciones - Estación Central', 'railclick-theme' ),
+        'railclick_render_estaciones_central_meta_box',
+        'page',
+        'normal',
+        'high'
+    );
+    
+    add_meta_box(
+        'estaciones_norte_meta_box',
+        __( 'Estaciones - Estación Norte', 'railclick-theme' ),
+        'railclick_render_estaciones_norte_meta_box',
+        'page',
+        'normal',
+        'high'
+    );
+    
+    add_meta_box(
+        'estaciones_sur_meta_box',
+        __( 'Estaciones - Estación Sur', 'railclick-theme' ),
+        'railclick_render_estaciones_sur_meta_box',
+        'page',
+        'normal',
+        'high'
+    );
+    
+    add_meta_box(
+        'estaciones_este_meta_box',
+        __( 'Estaciones - Estación Este', 'railclick-theme' ),
+        'railclick_render_estaciones_este_meta_box',
+        'page',
+        'normal',
+        'high'
+    );
+    
+    add_meta_box(
+        'estaciones_oeste_meta_box',
+        __( 'Estaciones - Estación Oeste', 'railclick-theme' ),
+        'railclick_render_estaciones_oeste_meta_box',
+        'page',
+        'normal',
+        'high'
+    );
+}
+// REMOVED: Now handled centrally in railclick_add_template_specific_meta_boxes
+
+// Renderizar metabox Hero para Estaciones
+function railclick_render_estaciones_hero_meta_box( $post ) {
+    wp_nonce_field( basename( __FILE__ ), 'estaciones_hero_nonce' );
+
+    $hero_subtitle = get_post_meta( $post->ID, 'estaciones_hero_subtitle', true );
+    $hero_title = get_post_meta( $post->ID, 'estaciones_hero_title', true );
+    $hero_description = get_post_meta( $post->ID, 'estaciones_hero_description', true );
+    $hero_bg_image = get_post_meta( $post->ID, 'estaciones_hero_bg_image', true );
+
+    ?>
+    <table class="form-table">
+        <tr>
+            <th><label for="estaciones_hero_subtitle">Subtítulo Hero</label></th>
+            <td><input type="text" name="estaciones_hero_subtitle" id="estaciones_hero_subtitle" value="<?php echo esc_attr( $hero_subtitle ); ?>" class="large-text" /></td>
+        </tr>
+        <tr>
+            <th><label for="estaciones_hero_title">Título Principal</label></th>
+            <td><input type="text" name="estaciones_hero_title" id="estaciones_hero_title" value="<?php echo esc_attr( $hero_title ); ?>" class="large-text" /></td>
+        </tr>
+        <tr>
+            <th><label for="estaciones_hero_description">Descripción</label></th>
+            <td><textarea name="estaciones_hero_description" id="estaciones_hero_description" class="large-text" rows="3"><?php echo esc_textarea( $hero_description ); ?></textarea></td>
+        </tr>
+        <tr>
+            <th><label for="estaciones_hero_bg_image">Imagen de Fondo</label></th>
+            <td>
+                <input type="text" name="estaciones_hero_bg_image" id="estaciones_hero_bg_image" value="<?php echo esc_attr( $hero_bg_image ); ?>" class="large-text" />
+                <button type="button" class="button" id="estaciones_hero_bg_image_button">Seleccionar Imagen</button>
+            </td>
+        </tr>
+    </table>
+    
+    <script>
+    jQuery(document).ready(function($) {
+        $('#estaciones_hero_bg_image_button').click(function(e) {
+            e.preventDefault();
+            var image = wp.media({
+                title: 'Seleccionar Imagen',
+                multiple: false
+            }).open().on('select', function() {
+                var uploaded_image = image.state().get('selection').first();
+                var image_url = uploaded_image.toJSON().url;
+                $('#estaciones_hero_bg_image').val(image_url);
+            });
+        });
+    });
+    </script>
+    <?php
+}
+
+// Función genérica para renderizar metaboxes de estaciones
+function railclick_render_estacion_meta_box( $post, $estacion_prefix, $estacion_name ) {
+    wp_nonce_field( basename( __FILE__ ), $estacion_prefix . '_nonce' );
+
+    $fields = [
+        'name' => 'Nombre de la Estación',
+        'tipo' => 'Tipo (Principal/Secundaria)',
+        'direccion' => 'Dirección Completa',
+        'horarios' => 'Horarios de Operación',
+        'servicios' => 'Servicios Disponibles (uno por línea)',
+        'facilidades' => 'Facilidades (una por línea)',
+        'conexiones' => 'Conexiones de Transporte (una por línea)',
+        'contacto' => 'Información de Contacto',
+        'image_1' => 'Imagen Principal',
+        'image_2' => 'Imagen Secundaria',
+        'image_3' => 'Imagen Adicional'
+    ];
+
+    ?>
+    <table class="form-table">
+        <?php foreach ($fields as $field_key => $field_label): ?>
+            <?php
+            $field_name = $estacion_prefix . '_' . $field_key;
+            $field_value = get_post_meta( $post->ID, $field_name, true );
+            ?>
+            <tr>
+                <th><label for="<?php echo esc_attr($field_name); ?>"><?php echo esc_html($field_label); ?></label></th>
+                <td>
+                    <?php if (in_array($field_key, ['horarios', 'servicios', 'facilidades', 'conexiones', 'contacto'])): ?>
+                        <textarea name="<?php echo esc_attr($field_name); ?>" id="<?php echo esc_attr($field_name); ?>" class="large-text" rows="4"><?php echo esc_textarea( $field_value ); ?></textarea>
+                    <?php elseif (strpos($field_key, 'image') !== false): ?>
+                        <input type="text" name="<?php echo esc_attr($field_name); ?>" id="<?php echo esc_attr($field_name); ?>" value="<?php echo esc_attr( $field_value ); ?>" class="large-text" />
+                        <button type="button" class="button image-upload-button" data-target="<?php echo esc_attr($field_name); ?>">Seleccionar Imagen</button>
+                    <?php else: ?>
+                        <input type="text" name="<?php echo esc_attr($field_name); ?>" id="<?php echo esc_attr($field_name); ?>" value="<?php echo esc_attr( $field_value ); ?>" class="large-text" />
+                    <?php endif; ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+    
+    <script>
+    jQuery(document).ready(function($) {
+        $('.image-upload-button').click(function(e) {
+            e.preventDefault();
+            var button = $(this);
+            var target = button.data('target');
+            var image = wp.media({
+                title: 'Seleccionar Imagen',
+                multiple: false
+            }).open().on('select', function() {
+                var uploaded_image = image.state().get('selection').first();
+                var image_url = uploaded_image.toJSON().url;
+                $('#' + target).val(image_url);
+            });
+        });
+    });
+    </script>
+    <?php
+}
+
+// Renderizar metaboxes específicos para cada estación
+function railclick_render_estaciones_central_meta_box( $post ) {
+    railclick_render_estacion_meta_box( $post, 'estacion_central', 'Estación Central' );
+}
+
+function railclick_render_estaciones_norte_meta_box( $post ) {
+    railclick_render_estacion_meta_box( $post, 'estacion_norte', 'Estación Norte' );
+}
+
+function railclick_render_estaciones_sur_meta_box( $post ) {
+    railclick_render_estacion_meta_box( $post, 'estacion_sur', 'Estación Sur' );
+}
+
+function railclick_render_estaciones_este_meta_box( $post ) {
+    railclick_render_estacion_meta_box( $post, 'estacion_este', 'Estación Este' );
+}
+
+function railclick_render_estaciones_oeste_meta_box( $post ) {
+    railclick_render_estacion_meta_box( $post, 'estacion_oeste', 'Estación Oeste' );
+}
+
+// Guardar metaboxes de estaciones
+function railclick_save_estaciones_meta_boxes( $post_id ) {
+    // Verificar nonce
+    if ( ! isset( $_POST['estaciones_hero_nonce'] ) || ! wp_verify_nonce( $_POST['estaciones_hero_nonce'], basename( __FILE__ ) ) ) {
+        return;
+    }
+
+    // Verificar autosave
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+        return;
+    }
+
+    // Verificar permisos
+    if ( ! current_user_can( 'edit_post', $post_id ) ) {
+        return;
+    }
+
+    // Campos Hero
+    $hero_fields = [
+        'estaciones_hero_subtitle',
+        'estaciones_hero_title', 
+        'estaciones_hero_description',
+        'estaciones_hero_bg_image'
+    ];
+
+    foreach ( $hero_fields as $field ) {
+        if ( isset( $_POST[$field] ) ) {
+            update_post_meta( $post_id, $field, sanitize_text_field( $_POST[$field] ) );
+        }
+    }
+
+    // Campos de estaciones
+    $estaciones = ['central', 'norte', 'sur', 'este', 'oeste'];
+    $estacion_fields = [
+        'name', 'tipo', 'direccion', 'horarios', 'servicios', 
+        'facilidades', 'conexiones', 'contacto', 'image_1', 'image_2', 'image_3'
+    ];
+
+    foreach ( $estaciones as $estacion ) {
+        foreach ( $estacion_fields as $field ) {
+            $field_name = 'estacion_' . $estacion . '_' . $field;
+            if ( isset( $_POST[$field_name] ) ) {
+                if ( in_array( $field, ['horarios', 'servicios', 'facilidades', 'conexiones', 'contacto'] ) ) {
+                    update_post_meta( $post_id, $field_name, sanitize_textarea_field( $_POST[$field_name] ) );
+                } else {
+                    update_post_meta( $post_id, $field_name, sanitize_text_field( $_POST[$field_name] ) );
+                }
+            }
+        }
+    }
+}
+add_action( 'save_post', 'railclick_save_estaciones_meta_boxes' );
 
